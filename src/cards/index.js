@@ -51,6 +51,8 @@ import { ReactComponent as CardQC } from "./QC.svg";
 import { ReactComponent as CardQD } from "./QD.svg";
 import { ReactComponent as CardQH } from "./QH.svg";
 import { ReactComponent as CardQS } from "./QS.svg";
+import { ReactComponent as Card1B } from "./1B.svg";
+import { ReactComponent as Card2B } from "./2B.svg";
 
 const cards = {
   "2": { clubs: Card2C, spades: Card2S, hearts: Card2H, diamonds: Card2D },
@@ -68,8 +70,22 @@ const cards = {
   A: { clubs: CardAC, spades: CardAS, hearts: CardAH, diamonds: CardAD },
 };
 
-export default ({ value, suit }) => {
+const WIDTH = 120;
+const HEIGHT = 168;
+
+export default ({ value, suit, width = WIDTH, height = HEIGHT, className }) => {
   const Component = cards[value][suit];
 
-  return <Component />;
+  return <Component width={width} height={height} className={className} />;
+};
+
+export const Back = ({ color, className }) => {
+  switch (color) {
+    case "black":
+      return <Card1B width={WIDTH} height={HEIGHT} className={className} />;
+
+    case "red":
+    default:
+      return <Card2B width={WIDTH} height={HEIGHT} className={className} />;
+  }
 };

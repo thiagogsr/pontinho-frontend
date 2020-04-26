@@ -9,9 +9,10 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Arial Regular", sans-serif;
     overflow: hidden;
     background-color: #106544;
+    margin: 0;
   }
 
-  #app {
+  #root {
     height: 100%;
   }
 `;
