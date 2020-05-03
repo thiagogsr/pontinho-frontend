@@ -1,32 +1,41 @@
 import React from "react";
+import {
+  Button,
+  Container,
+  Fieldset,
+  Input,
+  Label,
+  Side,
+  Title,
+} from "./styled";
 
 export default () => (
-  <div>
-    <div>
-      <h2>Novo jogo</h2>
+  <Container>
+    <Side>
+      <Title>Novo jogo</Title>
       <form>
-        <fieldset>
-          <label>Seu nome</label>
-          <input type="text" />
-        </fieldset>
-        <input type="submit" value="Criar jogo" />
+        <Fieldset>
+          <Label>Seu nome</Label>
+          <Input type="text" />
+        </Fieldset>
+        <Button type="submit" value="Criar jogo" />
       </form>
-    </div>
+    </Side>
 
-    <div>
-      <h2>Entrar em jogo já criado</h2>
+    <Side>
+      <Title>Entrar em jogo já criado</Title>
       <form>
-        <fieldset>
-          <label>Código do jogo</label>
-          <input type="text" />
-        </fieldset>
+        <Fieldset>
+          <Label>Código do jogo</Label>
+          <Input type="text" />
+        </Fieldset>
 
-        <fieldset>
-          <label>Seu nome</label>
-          <input type="text" />
-        </fieldset>
-        <input type="submit" value="Entrar" />
+        <Fieldset>
+          <Label>Seu nome</Label>
+          <Input type="text" />
+        </Fieldset>
+        <Button type="submit" value="Entrar" />
       </form>
-    </div>
-  </div>
+    </Side>
+  </Container>
 );
