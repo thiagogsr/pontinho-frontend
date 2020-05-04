@@ -1,6 +1,6 @@
 import React from "react";
-import Lobby from "./lobby";
+import Players from "./players";
 
-const App = () => <Lobby />;
+const App = () => <Players />;
 
 export default App;

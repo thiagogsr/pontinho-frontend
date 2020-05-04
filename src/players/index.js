@@ -1,44 +1,120 @@
 import React from "react";
+import { Button, Column, Container, Row, Table, Title } from "./styled";
 
 export default () => (
-  <div>
-    <h2>Jogadores</h2>
-    <p>
-      Jogo: <small>game id</small>
-    </p>
-    <button>Estou pronto</button>
-    <table>
+  <Container>
+    <div>
+      Código do jogo: <small>game id</small>
+    </div>
+
+    <Button>Iniciar partida</Button>
+
+    <Title>Jogadores</Title>
+
+    <Table cellSpacing="0">
       <thead>
-        <tr>
-          <th>Thiago</th>
-          <th>Priscilla</th>
-          <th>Neto</th>
-          <th>Emilly</th>
-          <th>Marquito</th>
-          <th>Tay</th>
-          <th>Cartas</th>
-        </tr>
+        <Row>
+          <Column header>Thiago</Column>
+          <Column header>Priscilla</Column>
+          <Column header>Neto</Column>
+          <Column header>Emilly</Column>
+          <Column header>Marquito</Column>
+          <Column header>Tay</Column>
+          <Column header>Cartas</Column>
+        </Row>
       </thead>
       <tbody>
-        <tr>
-          <td>99</td>
-          <td>99</td>
-          <td>99</td>
-          <td>99</td>
-          <td>99</td>
-          <td>99</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>10</td>
-          <td>11</td>
-          <td>12</td>
-          <td>13</td>
-          <td>14</td>
-          <td>Thiago</td>
-        </tr>
+        <Row>
+          <Column>99</Column>
+          <Column>99</Column>
+          <Column>99</Column>
+          <Column>99</Column>
+          <Column>99</Column>
+          <Column>99</Column>
+          <Column></Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column>Thiago</Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column></Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column>Thiago</Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column></Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column>Thiago</Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column></Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column>Thiago</Column>
+        </Row>
+        <Row>
+          <Column>9</Column>
+          <Column>10</Column>
+          <Column>11</Column>
+          <Column>12</Column>
+          <Column>13</Column>
+          <Column>14</Column>
+          <Column></Column>
+        </Row>
+        <Row>
+          <Column></Column>
+          <Column></Column>
+          <Column></Column>
+          <Column></Column>
+          <Column></Column>
+          <Column></Column>
+          <Column>Thiago</Column>
+        </Row>
       </tbody>
-    </table>
-  </div>
+    </Table>
+  </Container>
 );

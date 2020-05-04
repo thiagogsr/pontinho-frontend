@@ -1,21 +1,13 @@
 import React from "react";
 import { Container, Player } from "./styled";
 
-const Broke = () => (
-  <span role="img" aria-label="Estourou">
-    💣
-  </span>
-);
-
 export default () => (
   <Container>
     <Player>
       <div>Thiago</div>
       <div>99</div>
       <div>7 cartas</div>
-      <div>
-        <Broke />
-      </div>
+      <div>X</div>
     </Player>
 
     <Player>
@@ -29,11 +21,7 @@ export default () => (
       <div>Thiago</div>
       <div>99</div>
       <div>7 cartas</div>
-      <div>
-        <Broke />
-        <Broke />
-        <Broke />
-      </div>
+      <div>XXX</div>
     </Player>
   </Container>
 );
