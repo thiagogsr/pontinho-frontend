@@ -1,22 +1,4 @@
 import { combineReducers } from "redux";
-import { UPDATE_TABLE } from "./actions";
+import { newGameForm, joinGameForm, game } from "./lobby/reducers";
 
-const tableInitialState = {
-  players: [],
-  joker: [],
-  stock: [],
-  discardPile: [],
-  collections: [],
-  hand: [],
-};
-
-const table = (state = tableInitialState, action) => {
-  switch (action.type) {
-    case UPDATE_TABLE:
-      return action.table;
-    default:
-      return state;
-  }
-};
-
-export default combineReducers({ table });
+export default combineReducers({ newGameForm, joinGameForm, game });
