@@ -30,8 +30,8 @@ export function joinGame() {
           players,
         } = response.data;
 
-        setGame(gameId, bettingTable, players);
         dispatch({ type: RESET_JOIN_GAME_FORM });
+        dispatch(setGame(gameId, bettingTable, players));
         dispatch(redirectTo(`/${gameId}/${player.id}`));
       })
       .catch((error) => {
