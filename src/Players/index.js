@@ -7,8 +7,10 @@ export default () => {
 
   return (
     <Container>
-      <Title>Código do jogo</Title>
-      <div>{gameId}</div>
+      <Title>Pontinho</Title>
+      <div>
+        <strong>Código:</strong> {gameId}
+      </div>
 
       <Button>Iniciar partida</Button>
 

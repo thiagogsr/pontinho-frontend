@@ -18,7 +18,7 @@ export const Side = styled.div`
   }
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h2`
   color: white;
   text-align: center;
 `;

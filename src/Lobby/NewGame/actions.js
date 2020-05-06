@@ -1,5 +1,6 @@
 import { createGameRequest } from "./client";
 import { setGame } from "../actions";
+import { redirectTo } from "../../navigation";
 
 export const SET_NEW_GAME_NAME = "SET_NEW_GAME_NAME";
 export const SET_NEW_GAME_BETTING_TABLE = "SET_NEW_GAME_BETTING_TABLE";
@@ -35,6 +36,7 @@ export function createGame() {
 
         setGame(gameId, bettingTable, [player]);
         dispatch({ type: RESET_NEW_GAME_FORM });
+        dispatch(redirectTo(`/${gameId}/${player.id}`));
       })
       .catch((error) => {
         console.log(error);

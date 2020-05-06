@@ -1,10 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Lobby from "./Lobby";
 import Match from "./Match";
 import Players from "./Players";
 
-const App = () => (
+const App = ({ redirectTo }) => (
   <Router>
     <Switch>
       <Route path="/:gameId/:playerId/:matchId/:matchPlayerId">
@@ -17,7 +23,15 @@ const App = () => (
         <Lobby />
       </Route>
     </Switch>
+
+    {redirectTo && <Redirect to={redirectTo} />}
   </Router>
 );
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    redirectTo: state.navigation.redirectTo,
+  };
+};
+
+export default connect(mapStateToProps)(App);

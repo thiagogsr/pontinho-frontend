@@ -1,6 +1,6 @@
 import React from "react";
-import JoinGame from "./JoinGame";
 import NewGame from "./NewGame";
+import JoinGame from "./JoinGame";
 
 import { Container, Side, Title } from "./styled";
 

@@ -2,5 +2,6 @@ import { combineReducers } from "redux";
 import { game } from "./Lobby/reducers";
 import { newGameForm } from "./Lobby/NewGame/reducers";
 import { joinGameForm } from "./Lobby/JoinGame/reducers";
+import { navigation } from "./navigation";
 
-export default combineReducers({ newGameForm, joinGameForm, game });
+export default combineReducers({ navigation, newGameForm, joinGameForm, game });
