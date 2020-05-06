@@ -32,10 +32,11 @@ export function createGame() {
           game_id: gameId,
           betting_table: bettingTable,
           player,
+          players,
         } = response.data;
 
         dispatch({ type: RESET_NEW_GAME_FORM });
-        dispatch(setGame(gameId, bettingTable, [player]));
+        dispatch(setGame(gameId, bettingTable, players));
         dispatch(redirectTo(`/${gameId}/${player.id}`));
       })
       .catch((error) => {
