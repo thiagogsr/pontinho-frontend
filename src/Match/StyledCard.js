@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Card from "../cards";
+import Card from "../Card";
 
 export default styled(Card)`
   border: 2px solid ${(props) => (props.selected ? "white" : "transparent")};

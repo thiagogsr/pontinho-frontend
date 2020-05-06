@@ -10,7 +10,7 @@ export const Container = styled.div`
   background-color: white;
 `;
 
-export const Player = styled.div`
+export const MatchPlayer = styled.div`
   text-align: center;
   color: black;
   padding: 5px 15px;

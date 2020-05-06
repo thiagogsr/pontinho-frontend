@@ -1,9 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import Lobby from "./lobby";
-import Match from "./match";
-import Players from "./players";
+import Lobby from "./Lobby";
+import Match from "./Match";
+import Players from "./Players";
 
 const App = () => (
   <Router>

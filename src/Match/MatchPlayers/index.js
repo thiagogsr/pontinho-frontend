@@ -1,27 +1,27 @@
 import React from "react";
-import { Container, Player } from "./styled";
+import { Container, MatchPlayer } from "./styled";
 
 export default () => (
   <Container>
-    <Player>
+    <MatchPlayer>
       <div>Thiago</div>
       <div>99</div>
       <div>7 cartas</div>
       <div>X</div>
-    </Player>
+    </MatchPlayer>
 
-    <Player>
+    <MatchPlayer>
       <div>Thiago</div>
       <div>99</div>
       <div>7 cartas</div>
       <div></div>
-    </Player>
+    </MatchPlayer>
 
-    <Player>
+    <MatchPlayer>
       <div>Thiago</div>
       <div>99</div>
       <div>7 cartas</div>
       <div>XXX</div>
-    </Player>
+    </MatchPlayer>
   </Container>
 );
