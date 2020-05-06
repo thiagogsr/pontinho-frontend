@@ -18,6 +18,7 @@ export const Button = styled.button`
   cursor: pointer;
   padding: 10px 20px;
   margin-top: 20px;
+  font-size: 18px;
 
   &:hover,
   &:focus,

@@ -42,6 +42,18 @@ export const Input = styled.input`
   box-sizing: border-box;
 `;
 
+export const GroupedInput = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  ${Input} {
+    flex-basis: 32%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+`;
+
 export const Button = styled.input`
   background-color: #106544;
   color: white;

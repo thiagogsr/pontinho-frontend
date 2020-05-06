@@ -7,14 +7,36 @@ export default () => {
 
   return (
     <Container>
-      <div>
-        Código do jogo: <small>{gameId}</small>
-      </div>
+      <Title>Código do jogo</Title>
+      <div>{gameId}</div>
 
       <Button>Iniciar partida</Button>
 
-      <Title>Jogadores</Title>
+      <Title>Tabela de aposta</Title>
+      <Table cellSpacing="0">
+        <thead>
+          <Row>
+            <Column header>Sem X</Column>
+            <Column header>X</Column>
+            <Column header>XX</Column>
+            <Column header>XXX</Column>
+            <Column header>XXXX</Column>
+            <Column header>XXXXX</Column>
+          </Row>
+        </thead>
+        <tbody>
+          <Row>
+            <Column>50</Column>
+            <Column>100</Column>
+            <Column>200</Column>
+            <Column>400</Column>
+            <Column>800</Column>
+            <Column>1600</Column>
+          </Row>
+        </tbody>
+      </Table>
 
+      <Title>Jogadores</Title>
       <Table cellSpacing="0">
         <thead>
           <Row>

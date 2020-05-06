@@ -8,10 +8,10 @@ import Players from "./players";
 const App = () => (
   <Router>
     <Switch>
-      <Route path="/:gameId/:matchId">
+      <Route path="/:gameId/:playerId/:matchId/:matchPlayerId">
         <Match />
       </Route>
-      <Route path="/:gameId">
+      <Route path="/:gameId/:playerId">
         <Players />
       </Route>
       <Route path="/">
