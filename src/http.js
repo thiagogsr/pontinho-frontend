@@ -28,8 +28,8 @@ async function makeRequest(method, url, body = {}) {
     return response;
   } catch (error) {
     if (error.response) {
-      const { error: message } = error.response.data;
-      throw message;
+      const { errors } = error.response.data;
+      throw errors;
     } else {
       throw error.message;
     }

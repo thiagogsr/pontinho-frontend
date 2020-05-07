@@ -1,6 +1,7 @@
 import { createGameRequest } from "./client";
 import { setGame } from "../actions";
 import { redirectTo } from "../../navigation";
+import { setFlash } from "../../Flash";
 
 export const SET_NEW_GAME_NAME = "SET_NEW_GAME_NAME";
 export const SET_NEW_GAME_BETTING_TABLE = "SET_NEW_GAME_BETTING_TABLE";
@@ -32,15 +33,19 @@ export function createGame() {
           game_id: gameId,
           betting_table: bettingTable,
           player,
-          players,
+          matches,
         } = response.data;
 
         dispatch({ type: RESET_NEW_GAME_FORM });
-        dispatch(setGame(gameId, bettingTable, players));
+        dispatch(setGame(gameId, bettingTable, matches));
         dispatch(redirectTo(`/${gameId}/${player.id}`));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((errors) => {
+        const flash = [].concat(errors).map((text) => {
+          return { type: "error", text };
+        });
+
+        dispatch(setFlash(flash));
       });
   };
 }

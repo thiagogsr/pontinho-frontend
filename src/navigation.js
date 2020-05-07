@@ -5,6 +5,10 @@ export function redirectTo(target) {
   return { type: REDIRECT, target };
 }
 
+export function resetRedirect() {
+  return { type: RESET_REDIRECT };
+}
+
 const navigationInitialState = {
   redirectTo: null,
 };
