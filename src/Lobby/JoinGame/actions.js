@@ -28,11 +28,12 @@ export function joinGame() {
           game_id: gameId,
           betting_table: bettingTable,
           player,
+          players,
           matches,
         } = response.data;
 
         dispatch({ type: RESET_JOIN_GAME_FORM });
-        dispatch(setGame(gameId, bettingTable, matches));
+        dispatch(setGame(gameId, bettingTable, players, matches));
         dispatch(redirectTo(`/${gameId}/${player.id}`));
       })
       .catch((errors) => {

@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
 import copy from "copy-to-clipboard";
 import { Button, Copy, Column, Container, Row, Table, Title } from "./styled";
 
-const Game = () => {
+const Game = ({ id, bettingTable, players, matches }) => {
   const [copyButton, setCopyButton] = useState("copiar");
-  const { gameId } = useParams();
+  const lastMatch = matches[matches.length - 1];
 
   return (
     <Container>
       <Title>Pontinho</Title>
 
       <div>
-        <strong>Código:</strong> {gameId}
+        <strong>Código:</strong> {id}
         <Copy
           onClick={() =>
-            copy(gameId, {
+            copy(id, {
               onCopy: () => {
                 setCopyButton("copiado");
                 setTimeout(() => setCopyButton("copiar"), 3000);
@@ -44,12 +43,9 @@ const Game = () => {
         </thead>
         <tbody>
           <Row>
-            <Column>50</Column>
-            <Column>100</Column>
-            <Column>200</Column>
-            <Column>400</Column>
-            <Column>800</Column>
-            <Column>1600</Column>
+            {bettingTable.map((amount, index) => (
+              <Column key={index}>{amount}</Column>
+            ))}
           </Row>
         </tbody>
       </Table>
@@ -58,110 +54,77 @@ const Game = () => {
       <Table cellSpacing="0">
         <thead>
           <Row>
-            <Column header>Thiago</Column>
-            <Column header>Priscilla</Column>
-            <Column header>Neto</Column>
-            <Column header>Emilly</Column>
-            <Column header>Marquito</Column>
-            <Column header>Tay</Column>
-            <Column header>Cartas</Column>
+            {players.map((player, index) => (
+              <Column header key={index}>
+                {player.name}
+              </Column>
+            ))}
+
+            <Column header></Column>
           </Row>
         </thead>
         <tbody>
-          <Row>
-            <Column>99</Column>
-            <Column>99</Column>
-            <Column>99</Column>
-            <Column>99</Column>
-            <Column>99</Column>
-            <Column>99</Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column>Thiago</Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column>Thiago</Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column>Thiago</Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column>Thiago</Column>
-          </Row>
-          <Row>
-            <Column>9</Column>
-            <Column>10</Column>
-            <Column>11</Column>
-            <Column>12</Column>
-            <Column>13</Column>
-            <Column>14</Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column></Column>
-            <Column></Column>
-            <Column></Column>
-            <Column></Column>
-            <Column></Column>
-            <Column></Column>
-            <Column>Thiago</Column>
-          </Row>
+          {matches.length === 0 && (
+            <>
+              <Row>
+                {players.map((player, index) => (
+                  <Column key={index}>{player.points}</Column>
+                ))}
+
+                <Column></Column>
+              </Row>
+
+              <Row>
+                {players.map((player, index) => (
+                  <Column key={index}>&nbsp;</Column>
+                ))}
+
+                <Column></Column>
+              </Row>
+            </>
+          )}
+
+          {matches.map((match) => (
+            <>
+              <Row>
+                {match.match_players.map((matchPlayer) => (
+                  <Column>{matchPlayer.points_before}</Column>
+                ))}
+
+                <Column></Column>
+              </Row>
+              <Row>
+                {match.match_players.map((matchPlayer) => (
+                  <Column>{matchPlayer.points}</Column>
+                ))}
+
+                <Column>{match.croupier.name}</Column>
+              </Row>
+            </>
+          ))}
+
+          {lastMatch && (
+            <Row>
+              {lastMatch.match_players.map((matchPlayer, index) => (
+                <Column key={index}>{matchPlayer.points_after}</Column>
+              ))}
+
+              <Column></Column>
+            </Row>
+          )}
         </tbody>
       </Table>
     </Container>
   );
 };
 
-export default connect()(Game);
+const mapStateToProps = (state) => {
+  return {
+    id: state.game.id,
+    bettingTable: state.game.bettingTable,
+    players: state.game.players,
+    matches: state.game.matches,
+  };
+};
+
+export default connect(mapStateToProps)(Game);
