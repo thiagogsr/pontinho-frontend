@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Lobby from "./Lobby";
 import Match from "./Match";
-import Players from "./Players";
+import Game from "./Game";
 import Flash from "./Flash";
 import { resetRedirect } from "./navigation";
 
@@ -27,7 +27,7 @@ const App = ({ redirectTo, resetRedirect }) => {
           <Match />
         </Route>
         <Route path="/:gameId/:playerId">
-          <Players />
+          <Game />
         </Route>
         <Route path="/">
           <Lobby />

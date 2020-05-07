@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Button, Column, Container, Row, Table, Title } from "./styled";
+import copy from "copy-to-clipboard";
+import { Button, Copy, Column, Container, Row, Table, Title } from "./styled";
 
-export default () => {
+const Game = () => {
+  const [copyButton, setCopyButton] = useState("copiar");
   const { gameId } = useParams();
 
   return (
     <Container>
       <Title>Pontinho</Title>
+
       <div>
         <strong>Código:</strong> {gameId}
+        <Copy
+          onClick={() =>
+            copy(gameId, {
+              onCopy: () => {
+                setCopyButton("copiado");
+                setTimeout(() => setCopyButton("copiar"), 3000);
+              },
+            })
+          }
+        >
+          {copyButton}
+        </Copy>
       </div>
 
       <Button>Iniciar partida</Button>
@@ -147,3 +163,5 @@ export default () => {
     </Container>
   );
 };
+
+export default connect()(Game);

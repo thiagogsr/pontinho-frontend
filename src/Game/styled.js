@@ -28,6 +28,12 @@ export const Button = styled.button`
   }
 `;
 
+export const Copy = styled(Button)`
+  padding: 5px;
+  margin: 0 0 0 10px;
+  font-size: 12px;
+`;
+
 export const Table = styled.table`
   margin: 20px 0;
   width: 100%;
