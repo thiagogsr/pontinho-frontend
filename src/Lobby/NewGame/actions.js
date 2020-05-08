@@ -1,5 +1,5 @@
 import { createGameRequest } from "./client";
-import { setGame } from "../actions";
+import { setGame } from "../../actions";
 import { redirectTo } from "../../navigation";
 import { setFlash } from "../../Flash";
 
