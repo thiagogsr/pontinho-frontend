@@ -4,21 +4,21 @@ import Card, { Back } from "../../Card";
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-self: center;
+  width: 390px;
 `;
 
 export const DiscardPile = styled.div`
   width: 124px;
   height: 172px;
   overflow: hidden;
-  margin-left: 50px;
 `;
 
 export const Joker = styled(Card)`
   transform: rotate(-90deg);
   position: relative;
-  left: 50px;
+  left: 30px;
   z-index: 1;
 `;
 
@@ -27,6 +27,8 @@ export const Stock = styled(Back)`
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 7px;
+  position: absolute;
+  left: 100px;
 
   &:hover,
   &:focus,
