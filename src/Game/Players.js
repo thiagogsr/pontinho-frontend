@@ -74,7 +74,7 @@ const Players = ({
       <thead>
         <Row>
           {players.map((player) => (
-            <Column header key={player.id}>
+            <Column header key={player.id} lineThrough={!player.playing}>
               {player.name}
             </Column>
           ))}

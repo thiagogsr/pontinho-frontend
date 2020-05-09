@@ -47,6 +47,7 @@ export const Column = styled.td`
   border-style: solid;
   border-color: white;
   width: 100px;
+  text-decoration: ${(props) => (props.lineThrough ? "line-through" : "none")};
 `;
 
 export const Row = styled.tr`
