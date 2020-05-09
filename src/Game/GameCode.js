@@ -4,23 +4,24 @@ import copy from "copy-to-clipboard";
 import { Copy } from "./styled";
 
 const GameCode = ({ gameId }) => {
-  const [copyButton, setCopyButton] = useState("copiar");
+  const [buttonText, setButtonText] = useState("copiar");
 
   return (
     <>
       <div>
-        <strong>Código:</strong> {gameId}
+        <strong>Código do jogo:</strong> {gameId}
         <Copy
           onClick={() =>
             copy(gameId, {
-              onCopy: () => {
-                setCopyButton("copiado");
-                setTimeout(() => setCopyButton("copiar"), 3000);
+              format: "text/plain",
+              onCopy: (a) => {
+                setButtonText("copiado");
+                setTimeout(() => setButtonText("copiar"), 3000);
               },
             })
           }
         >
-          {copyButton}
+          {buttonText}
         </Copy>
       </div>
     </>
