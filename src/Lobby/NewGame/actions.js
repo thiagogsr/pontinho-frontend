@@ -39,7 +39,7 @@ export function createGame() {
 
         dispatch({ type: RESET_NEW_GAME_FORM });
         dispatch(setGame(gameId, bettingTable, players, matches));
-        dispatch(redirectTo(`/${gameId}/${playerId}`));
+        dispatch(redirectTo([gameId, playerId].join("/")));
       })
       .catch((errors) => {
         const flash = [].concat(errors).map((text) => {

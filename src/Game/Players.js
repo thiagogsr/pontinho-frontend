@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { Socket } from "phoenix";
-import { Column, Row, Table } from "./styled";
-import { setPlayers, fetchGame } from "../actions";
 import { useParams } from "react-router-dom";
+import { setPlayers, fetchGame, setMatch } from "../actions";
+import { redirectTo } from "../navigation";
+import { Column, Row, Table } from "./styled";
 
-const Players = ({ gameId, players, matches, setPlayers, fetchGame }) => {
+const Players = ({
+  gameId,
+  players,
+  matches,
+  setPlayers,
+  fetchGame,
+  setMatch,
+  redirectTo,
+}) => {
   const { gameId: gameIdFromUrl, playerId } = useParams();
   const lastMatch = matches[matches.length - 1];
 
@@ -22,7 +31,35 @@ const Players = ({ gameId, players, matches, setPlayers, fetchGame }) => {
     socket.connect();
 
     const channel = socket.channel(`game:${gameId}`);
+
     channel.on("player_joined", ({ players }) => setPlayers(players));
+
+    channel.on("match_started", (match) => {
+      const {
+        match_id: matchId,
+        match_player_id: matchPlayerId,
+        match_player_hand: matchPlayerHand,
+        pre_joker: preJoker,
+        no_stock: noStock,
+        head_discard_pile: headDiscardPile,
+        match_collections: matchCollections,
+        match_players: matchPlayers,
+      } = match;
+
+      setMatch(
+        matchId,
+        matchPlayerId,
+        matchPlayerHand,
+        preJoker,
+        noStock,
+        headDiscardPile,
+        matchCollections,
+        matchPlayers
+      );
+
+      redirectTo([gameId, playerId, matchId, matchPlayerId].join("/"));
+    });
+
     channel.join();
   });
 
@@ -61,7 +98,7 @@ const Players = ({ gameId, players, matches, setPlayers, fetchGame }) => {
         )}
 
         {matches.map((match) => (
-          <>
+          <Fragment key={match.id}>
             <Row>
               {match.match_players.map((matchPlayer) => (
                 <Column key={matchPlayer.id}>
@@ -78,17 +115,27 @@ const Players = ({ gameId, players, matches, setPlayers, fetchGame }) => {
 
               <Column>{match.croupier.name}</Column>
             </Row>
-          </>
+          </Fragment>
         ))}
 
         {lastMatch && (
-          <Row>
-            {lastMatch.match_players.map((matchPlayer) => (
-              <Column key={matchPlayer.id}>{matchPlayer.points_after}</Column>
-            ))}
+          <>
+            <Row>
+              {lastMatch.match_players.map((matchPlayer) => (
+                <Column key={matchPlayer.id}>{matchPlayer.points_after}</Column>
+              ))}
 
-            <Column></Column>
-          </Row>
+              <Column></Column>
+            </Row>
+
+            <Row>
+              {players.map((player) => (
+                <Column key={player.id}>&nbsp;</Column>
+              ))}
+
+              <Column></Column>
+            </Row>
+          </>
         )}
       </tbody>
     </Table>
@@ -106,6 +153,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setPlayers,
   fetchGame,
+  setMatch,
+  redirectTo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);

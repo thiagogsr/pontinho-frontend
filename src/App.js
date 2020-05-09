@@ -35,7 +35,7 @@ const App = ({ redirectTo, resetRedirect }) => {
       </Switch>
 
       <Flash />
-      {redirectTo && <Redirect push to={redirectTo} />}
+      {redirectTo && <Redirect to={redirectTo} />}
     </>
   );
 };
