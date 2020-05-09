@@ -5,7 +5,7 @@ import StyledCard from "../StyledCard";
 export default () => (
   <Container>
     <Joker value="A" suit="spades" />
-    <Stock color="black" />
+    <Stock deck={1} />
 
     <DiscardPile>
       <StyledCard value="K" suit="hearts" />
