@@ -1,27 +1,20 @@
 import React from "react";
 import { Container, MatchPlayer } from "./styled";
 
-export default () => (
+export default ({ matchPlayers }) => (
   <Container>
-    <MatchPlayer>
-      <div>Thiago</div>
-      <div>99</div>
-      <div>7 cartas</div>
-      <div>X</div>
-    </MatchPlayer>
-
-    <MatchPlayer>
-      <div>Thiago</div>
-      <div>99</div>
-      <div>7 cartas</div>
-      <div></div>
-    </MatchPlayer>
-
-    <MatchPlayer>
-      <div>Thiago</div>
-      <div>99</div>
-      <div>7 cartas</div>
-      <div>XXX</div>
-    </MatchPlayer>
+    {matchPlayers.map((matchPlayer) => (
+      <MatchPlayer key={matchPlayer.id}>
+        <div>{matchPlayer.name}</div>
+        <div>{matchPlayer.points}</div>
+        <div>{matchPlayer.cards} cartas</div>
+        <div>
+          {Array(matchPlayer.broke_times)
+            .fill()
+            .map(() => "X")
+            .join()}
+        </div>
+      </MatchPlayer>
+    ))}
   </Container>
 );

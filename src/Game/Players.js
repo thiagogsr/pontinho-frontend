@@ -2,9 +2,10 @@ import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { Socket } from "phoenix";
 import { useParams } from "react-router-dom";
-import { setPlayers, fetchGame, setMatch } from "../actions";
+import { setPlayers, fetchGame, setMatch, setMatchPlayer } from "../actions";
 import { redirectTo } from "../navigation";
 import { Column, Row, Table } from "./styled";
+import { SOCKET_ENDPOINT } from "../variables";
 
 const Players = ({
   gameId,
@@ -24,7 +25,7 @@ const Players = ({
       return;
     }
 
-    const socket = new Socket("ws://localhost:4000/socket", {
+    const socket = new Socket(SOCKET_ENDPOINT, {
       params: { player_id: playerId },
     });
 
@@ -34,30 +35,35 @@ const Players = ({
 
     channel.on("player_joined", ({ players }) => setPlayers(players));
 
-    channel.on("match_started", (match) => {
+    channel.on("match_started", (data) => {
+      const { match, match_player: matchPlayer } = data;
+
       const {
         match_id: matchId,
-        match_player_id: matchPlayerId,
-        match_player_hand: matchPlayerHand,
         pre_joker: preJoker,
-        no_stock: noStock,
+        head_stock_deck: headStockDeck,
         head_discard_pile: headDiscardPile,
         match_collections: matchCollections,
         match_players: matchPlayers,
       } = match;
 
+      const {
+        match_player_id: matchPlayerId,
+        match_player_hand: matchPlayerHand,
+      } = matchPlayer;
+
       setMatch(
         matchId,
-        matchPlayerId,
-        matchPlayerHand,
         preJoker,
-        noStock,
+        headStockDeck,
         headDiscardPile,
         matchCollections,
         matchPlayers
       );
 
-      redirectTo([gameId, playerId, matchId, matchPlayerId].join("/"));
+      setMatchPlayer(matchPlayerId, matchPlayerHand);
+
+      redirectTo(["", gameId, playerId, matchId, matchPlayerId].join("/"));
     });
 
     channel.join();

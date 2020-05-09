@@ -7,3 +7,7 @@ export function getGameRequest(gameId) {
 export function startMatchRequest(gameId) {
   return post(`/api/v1/matches`, { game_id: gameId });
 }
+
+export function getMatchRequest(matchId, matchPlayerId) {
+  return get(`/api/v1/matches/${matchId}/${matchPlayerId}`);
+}

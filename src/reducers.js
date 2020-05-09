@@ -3,7 +3,7 @@ import { newGameForm } from "./Lobby/NewGame/reducers";
 import { joinGameForm } from "./Lobby/JoinGame/reducers";
 import { flash } from "./Flash/reducers";
 import { navigation } from "./navigation";
-import { SET_GAME, SET_PLAYERS, SET_MATCH } from "./actions";
+import { SET_GAME, SET_PLAYERS, SET_MATCH, SET_MATCH_PLAYER } from "./actions";
 
 const gameInitialState = {
   id: null,
@@ -12,7 +12,7 @@ const gameInitialState = {
   matches: [],
 };
 
-export const game = (state = gameInitialState, action) => {
+const game = (state = gameInitialState, action) => {
   switch (action.type) {
     case SET_GAME:
       return {
@@ -31,16 +31,14 @@ export const game = (state = gameInitialState, action) => {
 
 const matchInitialState = {
   matchId: "",
-  matchPlayerId: "",
-  matchPlayerHand: [],
-  preJoker: {},
-  noStock: false,
-  headDiscardPile: {},
+  preJoker: null,
+  headStockDeck: null,
+  headDiscardPile: null,
   matchCollections: [],
   matchPlayers: [],
 };
 
-export const match = (state = matchInitialState, action) => {
+const match = (state = matchInitialState, action) => {
   switch (action.type) {
     case SET_MATCH:
       return {
@@ -49,10 +47,28 @@ export const match = (state = matchInitialState, action) => {
         matchPlayerId: action.matchPlayerId,
         matchPlayerHand: action.matchPlayerHand,
         preJoker: action.preJoker,
-        noJoker: action.noJoker,
+        headStockDeck: action.headStockDeck,
         headDiscardPile: action.headDiscardPile,
         matchCollections: action.matchCollections,
         matchPlayers: action.matchPlayers,
+      };
+    default:
+      return state;
+  }
+};
+
+const matchPlayerInitialState = {
+  matchPlayerId: "",
+  matchPlayerHand: [],
+};
+
+const matchPlayer = (state = matchPlayerInitialState, action) => {
+  switch (action.type) {
+    case SET_MATCH_PLAYER:
+      return {
+        ...state,
+        matchPlayerId: action.matchPlayerId,
+        matchPlayerHand: action.matchPlayerHand,
       };
     default:
       return state;
@@ -66,4 +82,5 @@ export default combineReducers({
   game,
   flash,
   match,
+  matchPlayer,
 });

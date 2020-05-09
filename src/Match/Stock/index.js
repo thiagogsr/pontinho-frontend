@@ -2,14 +2,15 @@ import React from "react";
 import { Container, Joker, Stock, DiscardPile } from "./styled";
 import StyledCard from "../StyledCard";
 
-export default () => (
+export default ({ headStockDeck, preJoker, headDiscardPile }) => (
   <Container>
-    <Joker value="A" suit="spades" />
-    <Stock deck={1} />
+    {preJoker && <Joker value={preJoker.value} suit={preJoker.suit} />}
+    {headStockDeck && <Stock deck={headStockDeck} />}
 
     <DiscardPile>
-      <StyledCard value="K" suit="hearts" />
-      <StyledCard value="Q" suit="hearts" />
+      {headDiscardPile && (
+        <StyledCard value={headDiscardPile.value} suit={headDiscardPile.suit} />
+      )}
     </DiscardPile>
   </Container>
 );
