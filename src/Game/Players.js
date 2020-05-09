@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Socket } from "phoenix";
 import { Column, Row, Table } from "./styled";
-import { setPlayers } from "../actions";
+import { setPlayers, fetchGame } from "../actions";
+import { useParams } from "react-router-dom";
 
-const Players = ({ gameId, playerId, players, matches, setPlayers }) => {
+const Players = ({ gameId, players, matches, setPlayers, fetchGame }) => {
+  const { gameId: gameIdFromUrl, playerId } = useParams();
   const lastMatch = matches[matches.length - 1];
 
   useEffect(() => {
-    if (!gameId) return;
+    if (!gameId) {
+      fetchGame(gameIdFromUrl);
+      return;
+    }
 
     const socket = new Socket("ws://localhost:4000/socket", {
       params: { player_id: playerId },
@@ -100,6 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setPlayers,
+  fetchGame,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);

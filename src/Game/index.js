@@ -1,50 +1,23 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import copy from "copy-to-clipboard";
+import React from "react";
+import GameCode from "./GameCode";
+import StartMatch from "./StartMatch";
 import BettingTable from "./BettingTable";
 import Players from "./Players";
-import { Button, Copy, Container, Title } from "./styled";
-import { useParams } from "react-router-dom";
+import { Container, Title } from "./styled";
 
-const Game = ({ gameId }) => {
-  const { playerId } = useParams();
-  const [copyButton, setCopyButton] = useState("copiar");
+const Game = () => (
+  <Container>
+    <Title>Pontinho</Title>
+    <GameCode />
 
-  return (
-    <Container>
-      <Title>Pontinho</Title>
+    <StartMatch />
 
-      <div>
-        <strong>Código:</strong> {gameId}
-        <Copy
-          onClick={() =>
-            copy(gameId, {
-              onCopy: () => {
-                setCopyButton("copiado");
-                setTimeout(() => setCopyButton("copiar"), 3000);
-              },
-            })
-          }
-        >
-          {copyButton}
-        </Copy>
-      </div>
+    <Title>Tabela de aposta</Title>
+    <BettingTable />
 
-      <Button>Iniciar partida</Button>
+    <Title>Jogadores</Title>
+    <Players />
+  </Container>
+);
 
-      <Title>Tabela de aposta</Title>
-      <BettingTable />
-
-      <Title>Jogadores</Title>
-      <Players playerId={playerId} />
-    </Container>
-  );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    gameId: state.game.id,
-  };
-};
-
-export default connect(mapStateToProps)(Game);
+export default Game;

@@ -27,14 +27,14 @@ export function joinGame() {
         const {
           game_id: gameId,
           betting_table: bettingTable,
-          player,
+          player_id: playerId,
           players,
           matches,
         } = response.data;
 
         dispatch({ type: RESET_JOIN_GAME_FORM });
         dispatch(setGame(gameId, bettingTable, players, matches));
-        dispatch(redirectTo(`/${gameId}/${player.id}`));
+        dispatch(redirectTo(`/${gameId}/${playerId}`));
       })
       .catch((errors) => {
         const flash = [].concat(errors).map((text) => {
