@@ -14,8 +14,10 @@ const Match = ({
   headStockDeck,
   headDiscardPile,
   preJoker,
-  matchPlayerHand,
   matchCollections,
+  roundMatchPlayerId,
+  matchPlayerId,
+  matchPlayerHand,
   fetchMatch,
 }) => {
   const {
@@ -32,7 +34,10 @@ const Match = ({
 
   return (
     <Table>
-      <MatchPlayers matchPlayers={matchPlayers} />
+      <MatchPlayers
+        matchPlayers={matchPlayers}
+        roundMatchPlayerId={roundMatchPlayerId}
+      />
 
       <Stock
         headStockDeck={headStockDeck}
@@ -55,6 +60,8 @@ const mapStateToProps = (state) => {
     headDiscardPile: state.match.headDiscardPile,
     preJoker: state.match.preJoker,
     matchCollections: state.match.matchCollections,
+    roundMatchPlayerId: state.match.roundMatchPlayerId,
+    matchPlayerId: state.matchPlayer.matchPlayerId,
     matchPlayerHand: state.matchPlayer.matchPlayerHand,
   };
 };

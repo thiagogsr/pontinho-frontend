@@ -75,16 +75,16 @@ const WIDTH = 120;
 export default ({ value, suit, width = WIDTH, className }) => {
   const Component = cards[value][suit];
 
-  return <Component width={width} height="auto" className={className} />;
+  return <Component width={width} className={className} />;
 };
 
 export const Back = ({ deck, className }) => {
   switch (deck) {
     case 1:
-      return <BackDeck1 width={WIDTH} height="auto" className={className} />;
+      return <BackDeck1 width={WIDTH} className={className} />;
 
     case 2:
     default:
-      return <BackDeck2 width={WIDTH} height="auto" className={className} />;
+      return <BackDeck2 width={WIDTH} className={className} />;
   }
 };

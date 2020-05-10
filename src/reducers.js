@@ -36,6 +36,7 @@ const matchInitialState = {
   headDiscardPile: null,
   matchCollections: [],
   matchPlayers: [],
+  roundMatchPlayerId: null,
 };
 
 const match = (state = matchInitialState, action) => {
@@ -51,6 +52,7 @@ const match = (state = matchInitialState, action) => {
         headDiscardPile: action.headDiscardPile,
         matchCollections: action.matchCollections,
         matchPlayers: action.matchPlayers,
+        roundMatchPlayerId: action.roundMatchPlayerId,
       };
     default:
       return state;

@@ -46,6 +46,7 @@ const Players = ({
         head_discard_pile: headDiscardPile,
         match_collections: matchCollections,
         match_players: matchPlayers,
+        round_match_player_id: roundMatchPlayerId,
       } = match;
 
       const {
@@ -59,7 +60,8 @@ const Players = ({
         headStockDeck,
         headDiscardPile,
         matchCollections,
-        matchPlayers
+        matchPlayers,
+        roundMatchPlayerId
       );
 
       setMatchPlayer(matchPlayerId, matchPlayerHand);

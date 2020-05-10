@@ -47,7 +47,8 @@ export function setMatch(
   headStockDeck,
   headDiscardPile,
   matchCollections,
-  matchPlayers
+  matchPlayers,
+  roundMatchPlayerId
 ) {
   return {
     type: SET_MATCH,
@@ -57,6 +58,7 @@ export function setMatch(
     headDiscardPile,
     matchCollections,
     matchPlayers,
+    roundMatchPlayerId,
   };
 }
 
@@ -76,6 +78,7 @@ export function fetchMatch(matchId, matchPlayerId) {
         head_discard_pile: headDiscardPile,
         match_collections: matchCollections,
         match_players: matchPlayers,
+        round_match_player_id: roundMatchPlayerId,
       } = match;
 
       const {
@@ -90,7 +93,8 @@ export function fetchMatch(matchId, matchPlayerId) {
           headStockDeck,
           headDiscardPile,
           matchCollections,
-          matchPlayers
+          matchPlayers,
+          roundMatchPlayerId
         )
       );
 
