@@ -2,10 +2,11 @@ import React from "react";
 import { Container, Sequence, Trio } from "./styled";
 import StyledCard from "../StyledCard";
 
-export default ({ matchCollections }) => (
+export default ({ matchCollections, myTime }) => (
   <Container>
     {matchCollections.map((matchCollection) => {
       const Component = matchCollection.type === "sequence" ? Sequence : Trio;
+
       return (
         <Component key={matchCollection.id}>
           {matchCollection.cards.map((card, index) => (
@@ -15,6 +16,7 @@ export default ({ matchCollections }) => (
               suit={card.suit}
               width={90}
               height={126}
+              selectable={myTime}
             />
           ))}
         </Component>

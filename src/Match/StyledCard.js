@@ -4,10 +4,10 @@ import Card from "../Card";
 export default styled(Card)`
   border: 2px solid ${(props) => (props.selected ? "white" : "transparent")};
   border-radius: 7px;
-  cursor: pointer;
+  cursor: ${(props) => (props.selectable ? "pointer" : "unset")};
 
   &:hover,
   &:focus {
-    border-color: white;
+    border-color: ${(props) => (props.selectable ? "white" : "transparent")};
   }
 `;

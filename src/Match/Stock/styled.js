@@ -24,7 +24,7 @@ export const Joker = styled(Card)`
 
 export const Stock = styled(Back)`
   z-index: 2;
-  cursor: pointer;
+  cursor: ${(props) => (props.selectable ? "pointer" : "unset")};
   border: 2px solid transparent;
   border-radius: 7px;
   position: relative;
@@ -33,6 +33,6 @@ export const Stock = styled(Back)`
   &:hover,
   &:focus,
   &.active {
-    border-color: white;
+    border-color: ${(props) => (props.selectable ? "white" : "transparent")};
   }
 `;

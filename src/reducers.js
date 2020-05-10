@@ -3,7 +3,13 @@ import { newGameForm } from "./Lobby/NewGame/reducers";
 import { joinGameForm } from "./Lobby/JoinGame/reducers";
 import { flash } from "./Flash/reducers";
 import { navigation } from "./navigation";
-import { SET_GAME, SET_PLAYERS, SET_MATCH, SET_MATCH_PLAYER } from "./actions";
+import {
+  SET_GAME,
+  SET_PLAYERS,
+  SET_MATCH,
+  SET_MATCH_PLAYER,
+  TOGGLE_CARD,
+} from "./actions";
 
 const gameInitialState = {
   id: null,
@@ -62,6 +68,7 @@ const match = (state = matchInitialState, action) => {
 const matchPlayerInitialState = {
   matchPlayerId: "",
   matchPlayerHand: [],
+  selectedCards: [],
 };
 
 const matchPlayer = (state = matchPlayerInitialState, action) => {
@@ -72,6 +79,19 @@ const matchPlayer = (state = matchPlayerInitialState, action) => {
         matchPlayerId: action.matchPlayerId,
         matchPlayerHand: action.matchPlayerHand,
       };
+    case TOGGLE_CARD:
+      if (state.selectedCards.find((c) => c === action.card)) {
+        return {
+          ...state,
+          selectedCards: state.selectedCards.filter((c) => c !== action.card),
+        };
+      } else {
+        return {
+          ...state,
+          selectedCards: state.selectedCards.concat(action.card),
+        };
+      }
+
     default:
       return state;
   }

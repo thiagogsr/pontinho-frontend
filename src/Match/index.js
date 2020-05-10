@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Socket } from "phoenix";
 import Collections from "./Collections";
 import Hand from "./Hand";
 import MatchPlayers from "./MatchPlayers";
 import Stock from "./Stock";
 import { fetchMatch } from "../actions";
 import { Table } from "./styled";
+import { SOCKET_ENDPOINT } from "../variables";
 
 const Match = ({
   matchId,
@@ -18,18 +20,31 @@ const Match = ({
   roundMatchPlayerId,
   matchPlayerId,
   matchPlayerHand,
+  selectedCards,
   fetchMatch,
 }) => {
   const {
+    playerId,
     matchId: matchIdFromUrl,
     matchPlayerId: matchPlayerIdFromUrl,
   } = useParams();
+
+  const myTime = matchPlayerId === roundMatchPlayerId;
 
   useEffect(() => {
     if (!matchId) {
       fetchMatch(matchIdFromUrl, matchPlayerIdFromUrl);
       return;
     }
+
+    const socket = new Socket(SOCKET_ENDPOINT, {
+      params: { player_id: playerId },
+    });
+
+    socket.connect();
+
+    const channel = socket.channel(`match:${matchId}`);
+    channel.join();
   });
 
   return (
@@ -43,11 +58,16 @@ const Match = ({
         headStockDeck={headStockDeck}
         headDiscardPile={headDiscardPile}
         preJoker={preJoker}
+        myTime={myTime}
       />
 
-      <Collections matchCollections={matchCollections} />
+      <Collections matchCollections={matchCollections} myTime={myTime} />
 
-      <Hand cards={matchPlayerHand} />
+      <Hand
+        cards={matchPlayerHand}
+        selectedCards={selectedCards}
+        myTime={myTime}
+      />
     </Table>
   );
 };
@@ -63,6 +83,7 @@ const mapStateToProps = (state) => {
     roundMatchPlayerId: state.match.roundMatchPlayerId,
     matchPlayerId: state.matchPlayer.matchPlayerId,
     matchPlayerHand: state.matchPlayer.matchPlayerHand,
+    selectedCards: state.matchPlayer.selectedCards,
   };
 };
 

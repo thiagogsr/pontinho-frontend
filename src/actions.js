@@ -5,6 +5,7 @@ export const SET_GAME = "SET_GAME";
 export const SET_PLAYERS = "SET_PLAYERS";
 export const SET_MATCH = "SET_MATCH";
 export const SET_MATCH_PLAYER = "SET_MATCH_PLAYER";
+export const TOGGLE_CARD = "TOGGLE_CARD";
 
 export function setGame(id, bettingTable, players, matches) {
   return { type: SET_GAME, id, bettingTable, players, matches };
@@ -101,4 +102,8 @@ export function fetchMatch(matchId, matchPlayerId) {
       dispatch(setMatchPlayer(matchPlayerId, matchPlayerHand));
     });
   };
+}
+
+export function toggleCard(card) {
+  return { type: TOGGLE_CARD, card };
 }
