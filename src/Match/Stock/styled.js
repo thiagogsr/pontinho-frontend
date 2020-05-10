@@ -27,8 +27,8 @@ export const Stock = styled(Back)`
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 7px;
-  position: absolute;
-  left: 100px;
+  position: relative;
+  left: -50px;
 
   &:hover,
   &:focus,

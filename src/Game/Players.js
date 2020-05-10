@@ -14,6 +14,7 @@ const Players = ({
   setPlayers,
   fetchGame,
   setMatch,
+  setMatchPlayer,
   redirectTo,
 }) => {
   const { gameId: gameIdFromUrl, playerId } = useParams();
@@ -161,6 +162,7 @@ const mapDispatchToProps = {
   fetchGame,
   setMatch,
   redirectTo,
+  setMatchPlayer,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);
