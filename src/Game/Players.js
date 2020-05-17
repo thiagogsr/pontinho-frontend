@@ -1,11 +1,10 @@
 import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
-import { Socket } from "phoenix";
 import { useParams } from "react-router-dom";
+import PlayerSocket from "../PlayerSocket";
 import { setPlayers, fetchGame, setMatch, setMatchPlayer } from "../actions";
 import { redirectTo } from "../navigation";
 import { Column, Row, Table } from "./styled";
-import { SOCKET_ENDPOINT } from "../variables";
 
 const Players = ({
   gameId,
@@ -26,10 +25,7 @@ const Players = ({
       return;
     }
 
-    const socket = new Socket(SOCKET_ENDPOINT, {
-      params: { player_id: playerId },
-    });
-
+    const socket = new PlayerSocket(playerId);
     socket.connect();
 
     const channel = socket.channel(`game:${gameId}`);

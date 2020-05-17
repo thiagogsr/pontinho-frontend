@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Socket } from "phoenix";
+import PlayerSocket from "../PlayerSocket";
 import Collections from "./Collections";
 import Hand from "./Hand";
 import MatchPlayers from "./MatchPlayers";
 import Stock from "./Stock";
 import { fetchMatch } from "../actions";
 import { Table } from "./styled";
-import { SOCKET_ENDPOINT } from "../variables";
 
 const Match = ({
   matchId,
@@ -37,10 +36,7 @@ const Match = ({
       return;
     }
 
-    const socket = new Socket(SOCKET_ENDPOINT, {
-      params: { player_id: playerId },
-    });
-
+    const socket = new PlayerSocket(playerId);
     socket.connect();
 
     const channel = socket.channel(`match:${matchId}`);
