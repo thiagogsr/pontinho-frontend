@@ -48,6 +48,7 @@ const Players = ({
       const {
         match_player_id: matchPlayerId,
         match_player_hand: matchPlayerHand,
+        taked_card: takedCard,
       } = matchPlayer;
 
       setMatch(
@@ -60,7 +61,7 @@ const Players = ({
         roundMatchPlayerId
       );
 
-      setMatchPlayer(matchPlayerId, matchPlayerHand);
+      setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard);
 
       redirectTo(["", gameId, playerId, matchId, matchPlayerId].join("/"));
     });

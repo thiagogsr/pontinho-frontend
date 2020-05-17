@@ -36,3 +36,23 @@ export const Stock = styled(Back)`
     border-color: ${(props) => (props.selectable ? "white" : "transparent")};
   }
 `;
+
+export const FirstCard = styled.div``;
+
+export const FirstCardActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const FirstCardButton = styled.button`
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: white;
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: underline;
+  }
+`;

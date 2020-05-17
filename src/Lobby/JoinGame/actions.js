@@ -1,7 +1,7 @@
 import { joinGameRequest } from "./client";
 import { setGame } from "../../actions";
 import { redirectTo } from "../../navigation";
-import { setFlash } from "../../Flash";
+import { setErrorFlash } from "../../Flash";
 
 export const CHANGE_JOIN_GAME_FORM = "CHANGE_JOIN_GAME_FORM";
 export const RESET_JOIN_GAME_FORM = "RESET_JOIN_GAME_FORM";
@@ -37,11 +37,7 @@ export function joinGame() {
         dispatch(redirectTo(["", gameId, playerId].join("/")));
       })
       .catch((errors) => {
-        const flash = [].concat(errors).map((text) => {
-          return { type: "error", text };
-        });
-
-        dispatch(setFlash(flash));
+        dispatch(setErrorFlash(errors));
       });
   };
 }

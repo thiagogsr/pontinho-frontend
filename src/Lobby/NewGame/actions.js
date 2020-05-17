@@ -1,7 +1,7 @@
 import { createGameRequest } from "./client";
 import { setGame } from "../../actions";
 import { redirectTo } from "../../navigation";
-import { setFlash } from "../../Flash";
+import { setErrorFlash } from "../../Flash";
 
 export const SET_NEW_GAME_NAME = "SET_NEW_GAME_NAME";
 export const SET_NEW_GAME_BETTING_TABLE = "SET_NEW_GAME_BETTING_TABLE";
@@ -42,11 +42,7 @@ export function createGame() {
         dispatch(redirectTo(["", gameId, playerId].join("/")));
       })
       .catch((errors) => {
-        const flash = [].concat(errors).map((text) => {
-          return { type: "error", text };
-        });
-
-        dispatch(setFlash(flash));
+        dispatch(setErrorFlash(errors));
       });
   };
 }

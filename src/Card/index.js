@@ -82,11 +82,11 @@ export default ({ value, suit, width = WIDTH, className, onClick }) => {
   );
 };
 
-export const Back = ({ deck, className }) => {
+export const Back = ({ deck, className, onClick }) => {
   switch (deck) {
     case 1:
       return (
-        <div>
+        <div onClick={onClick}>
           <BackDeck1 width={WIDTH} className={className} />
         </div>
       );
@@ -94,7 +94,7 @@ export const Back = ({ deck, className }) => {
     case 2:
     default:
       return (
-        <div>
+        <div onClick={onClick}>
           <BackDeck2 width={WIDTH} className={className} />
         </div>
       );

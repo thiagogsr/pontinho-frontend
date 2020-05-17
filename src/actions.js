@@ -1,5 +1,5 @@
 import { getGameRequest, startMatchRequest, getMatchRequest } from "./client";
-import { setFlash } from "./Flash/actions";
+import { setErrorFlash } from "./Flash/actions";
 
 export const SET_GAME = "SET_GAME";
 export const SET_PLAYERS = "SET_PLAYERS";
@@ -33,11 +33,7 @@ export function fetchGame(gameId) {
 export function startMatch(gameId) {
   return (dispatch) => {
     return startMatchRequest(gameId).catch((errors) => {
-      const flash = [].concat(errors).map((text) => {
-        return { type: "error", text };
-      });
-
-      dispatch(setFlash(flash));
+      dispatch(setErrorFlash(errors));
     });
   };
 }
@@ -63,8 +59,8 @@ export function setMatch(
   };
 }
 
-export function setMatchPlayer(matchPlayerId, matchPlayerHand) {
-  return { type: SET_MATCH_PLAYER, matchPlayerId, matchPlayerHand };
+export function setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard) {
+  return { type: SET_MATCH_PLAYER, matchPlayerId, matchPlayerHand, takedCard };
 }
 
 export function fetchMatch(matchId, matchPlayerId) {
@@ -85,6 +81,7 @@ export function fetchMatch(matchId, matchPlayerId) {
       const {
         match_player_id: matchPlayerId,
         match_player_hand: matchPlayerHand,
+        taked_card: takedCard,
       } = matchPlayer;
 
       dispatch(
@@ -99,7 +96,7 @@ export function fetchMatch(matchId, matchPlayerId) {
         )
       );
 
-      dispatch(setMatchPlayer(matchPlayerId, matchPlayerHand));
+      dispatch(setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard));
     });
   };
 }

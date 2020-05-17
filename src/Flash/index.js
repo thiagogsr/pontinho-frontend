@@ -1,5 +1,5 @@
 import Flash from "./Flash";
-import { setFlash } from "./actions";
+import { setSuccessFlash, setErrorFlash } from "./actions";
 
 export default Flash;
-export { setFlash };
+export { setSuccessFlash, setErrorFlash };

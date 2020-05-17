@@ -51,8 +51,6 @@ const match = (state = matchInitialState, action) => {
       return {
         ...state,
         matchId: action.matchId,
-        matchPlayerId: action.matchPlayerId,
-        matchPlayerHand: action.matchPlayerHand,
         preJoker: action.preJoker,
         headStockDeck: action.headStockDeck,
         headDiscardPile: action.headDiscardPile,
@@ -69,6 +67,7 @@ const matchPlayerInitialState = {
   matchPlayerId: "",
   matchPlayerHand: [],
   selectedCards: [],
+  takedCard: null,
 };
 
 const matchPlayer = (state = matchPlayerInitialState, action) => {
@@ -78,6 +77,7 @@ const matchPlayer = (state = matchPlayerInitialState, action) => {
         ...state,
         matchPlayerId: action.matchPlayerId,
         matchPlayerHand: action.matchPlayerHand,
+        takedCard: action.takedCard,
       };
     case TOGGLE_CARD:
       if (state.selectedCards.find((c) => c === action.card)) {
@@ -91,7 +91,6 @@ const matchPlayer = (state = matchPlayerInitialState, action) => {
           selectedCards: state.selectedCards.concat(action.card),
         };
       }
-
     default:
       return state;
   }
