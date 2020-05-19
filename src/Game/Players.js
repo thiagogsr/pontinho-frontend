@@ -17,7 +17,7 @@ const Players = ({
   redirectTo,
 }) => {
   const { gameId: gameIdFromUrl, playerId } = useParams();
-  const lastMatch = matches[matches.length - 1];
+  const numberOfMatches = matches.length;
 
   useEffect(() => {
     if (!gameId) {
@@ -48,6 +48,8 @@ const Players = ({
       const {
         match_player_id: matchPlayerId,
         match_player_hand: matchPlayerHand,
+        asked_beat: askedBeat,
+        false_beat: falseBeat,
         taked_card: takedCard,
       } = matchPlayer;
 
@@ -61,7 +63,13 @@ const Players = ({
         roundMatchPlayerId
       );
 
-      setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard);
+      setMatchPlayer(
+        matchPlayerId,
+        matchPlayerHand,
+        askedBeat,
+        falseBeat,
+        takedCard
+      );
 
       redirectTo(["", gameId, playerId, matchId, matchPlayerId].join("/"));
     });
@@ -116,7 +124,14 @@ const Players = ({
             </Row>
             <Row>
               {match.match_players.map((matchPlayer) => (
-                <Column key={matchPlayer.id}>{matchPlayer.points}</Column>
+                <Column key={matchPlayer.id}>
+                  {matchPlayer.broke
+                    ? Array(matchPlayer.broke)
+                        .fill()
+                        .map(() => "X")
+                        .join()
+                    : matchPlayer.points}
+                </Column>
               ))}
 
               <Column>{match.croupier.name}</Column>
@@ -124,11 +139,11 @@ const Players = ({
           </Fragment>
         ))}
 
-        {lastMatch && (
+        {numberOfMatches > 0 && (
           <>
             <Row>
-              {lastMatch.match_players.map((matchPlayer) => (
-                <Column key={matchPlayer.id}>{matchPlayer.points_after}</Column>
+              {players.map((player) => (
+                <Column key={player.id}>{player.points}</Column>
               ))}
 
               <Column></Column>
