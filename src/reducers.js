@@ -67,6 +67,8 @@ const matchPlayerInitialState = {
   matchPlayerId: "",
   matchPlayerHand: [],
   selectedCards: [],
+  askedBeat: false,
+  falseBeat: false,
   takedCard: null,
 };
 
@@ -77,7 +79,10 @@ const matchPlayer = (state = matchPlayerInitialState, action) => {
         ...state,
         matchPlayerId: action.matchPlayerId,
         matchPlayerHand: action.matchPlayerHand,
+        askedBeat: action.askedBeat,
+        falseBeat: action.falseBeat,
         takedCard: action.takedCard,
+        selectedCards: [],
       };
     case TOGGLE_CARD:
       if (state.selectedCards.find((c) => c === action.card)) {

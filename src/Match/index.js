@@ -6,8 +6,9 @@ import Collections from "./Collections";
 import Hand from "./Hand";
 import MatchPlayers from "./MatchPlayers";
 import Stock from "./Stock";
-import { fetchMatch, setMatch, setMatchPlayer } from "../actions";
+import Actions from "./Actions";
 import { setErrorFlash } from "../Flash";
+import { fetchMatch, setMatch, setMatchPlayer } from "../actions";
 import { Table } from "./styled";
 
 class Match extends React.Component {
@@ -73,6 +74,8 @@ class Match extends React.Component {
       const {
         match_player_id: matchPlayerId,
         match_player_hand: matchPlayerHand,
+        asked_beat: askedBeat,
+        false_beat: falseBeat,
         taked_card: takedCard,
       } = matchPlayer;
 
@@ -86,7 +89,13 @@ class Match extends React.Component {
         roundMatchPlayerId
       );
 
-      setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard);
+      setMatchPlayer(
+        matchPlayerId,
+        matchPlayerHand,
+        askedBeat,
+        falseBeat,
+        takedCard
+      );
     });
 
     this.channel.on("beat", () => {});
@@ -168,9 +177,72 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
-  onDiscard() {}
+  onDiscard = () => {
+    if (!this.connectedChannel()) {
+      return;
+    }
 
-  onTakeDiscardPile() {}
+    const { selectedCards } = this.props;
+
+    const payload = { type: "DISCARD", cards: selectedCards };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
+  onTakeDiscardPile = () => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const payload = { type: "TAKE_DISCARD_PILE" };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
+  onAskBeat = () => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const payload = { type: "ASK_BEAT" };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
+  onFalseBeat = () => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const payload = { type: "FALSE_BEAT" };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
+  onBeat = () => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const payload = { type: "BEAT" };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
 
   render() {
     const {
@@ -183,6 +255,8 @@ class Match extends React.Component {
       matchPlayerId,
       matchPlayerHand,
       selectedCards,
+      askedBeat,
+      falseBeat,
       takedCard,
     } = this.props;
 
@@ -209,6 +283,17 @@ class Match extends React.Component {
 
         <Collections matchCollections={matchCollections} myTime={myTime} />
 
+        <Actions
+          discard={myTime && selectedCards.length === 1}
+          onDiscard={this.onDiscard}
+          beat={myTime && matchPlayerHand.length === 0}
+          onBeat={this.onBeat}
+          askBeat={!myTime && !falseBeat}
+          onAskBeat={this.onAskBeat}
+          falseBeat={askedBeat}
+          onFalseBeat={this.onFalseBeat}
+        />
+
         <Hand
           cards={matchPlayerHand}
           selectedCards={selectedCards}
@@ -230,6 +315,8 @@ const mapStateToProps = (state) => {
     roundMatchPlayerId: state.match.roundMatchPlayerId,
     matchPlayerId: state.matchPlayer.matchPlayerId,
     matchPlayerHand: state.matchPlayer.matchPlayerHand,
+    askedBeat: state.matchPlayer.askedBeat,
+    falseBeat: state.matchPlayer.falseBeat,
     takedCard: state.matchPlayer.takedCard,
     selectedCards: state.matchPlayer.selectedCards,
   };

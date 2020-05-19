@@ -59,8 +59,21 @@ export function setMatch(
   };
 }
 
-export function setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard) {
-  return { type: SET_MATCH_PLAYER, matchPlayerId, matchPlayerHand, takedCard };
+export function setMatchPlayer(
+  matchPlayerId,
+  matchPlayerHand,
+  askedBeat,
+  falseBeat,
+  takedCard
+) {
+  return {
+    type: SET_MATCH_PLAYER,
+    matchPlayerId,
+    matchPlayerHand,
+    askedBeat,
+    falseBeat,
+    takedCard,
+  };
 }
 
 export function fetchMatch(matchId, matchPlayerId) {
@@ -81,6 +94,8 @@ export function fetchMatch(matchId, matchPlayerId) {
       const {
         match_player_id: matchPlayerId,
         match_player_hand: matchPlayerHand,
+        asked_beat: askedBeat,
+        false_beat: falseBeat,
         taked_card: takedCard,
       } = matchPlayer;
 
@@ -96,7 +111,15 @@ export function fetchMatch(matchId, matchPlayerId) {
         )
       );
 
-      dispatch(setMatchPlayer(matchPlayerId, matchPlayerHand, takedCard));
+      dispatch(
+        setMatchPlayer(
+          matchPlayerId,
+          matchPlayerHand,
+          askedBeat,
+          falseBeat,
+          takedCard
+        )
+      );
     });
   };
 }
