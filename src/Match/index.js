@@ -256,6 +256,24 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
+  onDropCollection = () => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const { selectedCards, takedCard, setErrorFlash } = this.props;
+
+    const payload = {
+      type: "DROP_COLLECTION",
+      cards: selectedCards.concat(takedCard),
+    };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
   render() {
     const {
       matchPlayers,
@@ -296,8 +314,10 @@ class Match extends React.Component {
         <Collections matchCollections={matchCollections} myTime={myTime} />
 
         <Actions
-          discard={myTime && selectedCards.length === 1}
+          discard={myTime && selectedCards.length === 1 && !takedCard}
           onDiscard={this.onDiscard}
+          dropCollection={myTime && selectedCards.concat(takedCard).length > 2}
+          onDropCollection={this.onDropCollection}
           beat={myTime && matchPlayerHand.length === 0}
           onBeat={this.onBeat}
           askBeat={!myTime && !falseBeat}

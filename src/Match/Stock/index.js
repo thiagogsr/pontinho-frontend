@@ -19,6 +19,7 @@ export default ({
   onBuy,
   onAcceptFirstCard,
   onRejectFirstCard,
+  onTakeDiscardPile,
 }) => (
   <Container>
     {preJoker && <Joker value={preJoker.value} suit={preJoker.suit} />}
@@ -37,6 +38,7 @@ export default ({
           value={headDiscardPile.value}
           suit={headDiscardPile.suit}
           selectable={myTime}
+          onClick={onTakeDiscardPile}
         />
       )}
     </DiscardPile>
