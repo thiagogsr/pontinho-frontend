@@ -156,6 +156,8 @@ class Match extends React.Component {
       return;
     }
 
+    const { setErrorFlash } = this.props;
+
     const payload = { type: "ACCEPT_FIRST_CARD" };
 
     this.channel
@@ -168,6 +170,8 @@ class Match extends React.Component {
     if (!this.connectedChannel()) {
       return;
     }
+
+    const { setErrorFlash } = this.props;
 
     const payload = { type: "REJECT_FIRST_CARD" };
 
@@ -182,7 +186,7 @@ class Match extends React.Component {
       return;
     }
 
-    const { selectedCards } = this.props;
+    const { selectedCards, setErrorFlash } = this.props;
 
     const payload = { type: "DISCARD", cards: selectedCards };
 
@@ -197,6 +201,8 @@ class Match extends React.Component {
       return;
     }
 
+    const { setErrorFlash } = this.props;
+
     const payload = { type: "TAKE_DISCARD_PILE" };
 
     this.channel
@@ -209,6 +215,8 @@ class Match extends React.Component {
     if (!this.connectedChannel()) {
       return;
     }
+
+    const { setErrorFlash } = this.props;
 
     const payload = { type: "ASK_BEAT" };
 
@@ -223,6 +231,8 @@ class Match extends React.Component {
       return;
     }
 
+    const { setErrorFlash } = this.props;
+
     const payload = { type: "FALSE_BEAT" };
 
     this.channel
@@ -235,6 +245,8 @@ class Match extends React.Component {
     if (!this.connectedChannel()) {
       return;
     }
+
+    const { setErrorFlash } = this.props;
 
     const payload = { type: "BEAT" };
 
