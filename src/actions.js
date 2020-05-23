@@ -64,7 +64,9 @@ export function setMatchPlayer(
   matchPlayerHand,
   askedBeat,
   falseBeat,
-  takedCard
+  takedCard,
+  boughtFirstCard,
+  takedDiscardPile
 ) {
   return {
     type: SET_MATCH_PLAYER,
@@ -73,6 +75,8 @@ export function setMatchPlayer(
     askedBeat,
     falseBeat,
     takedCard,
+    boughtFirstCard,
+    takedDiscardPile,
   };
 }
 
@@ -97,6 +101,8 @@ export function fetchMatch(matchId, matchPlayerId) {
         asked_beat: askedBeat,
         false_beat: falseBeat,
         taked_card: takedCard,
+        bought_first_card: boughtFirstCard,
+        taked_discard_pile: takedDiscardPile,
       } = matchPlayer;
 
       dispatch(
@@ -117,7 +123,9 @@ export function fetchMatch(matchId, matchPlayerId) {
           matchPlayerHand,
           askedBeat,
           falseBeat,
-          takedCard
+          takedCard,
+          boughtFirstCard,
+          takedDiscardPile
         )
       );
     });

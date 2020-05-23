@@ -77,6 +77,8 @@ class Match extends React.Component {
         asked_beat: askedBeat,
         false_beat: falseBeat,
         taked_card: takedCard,
+        bought_first_card: boughtFirstCard,
+        taked_discard_pile: takedDiscardPile,
       } = matchPlayer;
 
       setMatch(
@@ -94,7 +96,9 @@ class Match extends React.Component {
         matchPlayerHand,
         askedBeat,
         falseBeat,
-        takedCard
+        takedCard,
+        boughtFirstCard,
+        takedDiscardPile
       );
     });
 
@@ -157,7 +161,6 @@ class Match extends React.Component {
     }
 
     const { setErrorFlash } = this.props;
-
     const payload = { type: "ACCEPT_FIRST_CARD" };
 
     this.channel
@@ -172,7 +175,6 @@ class Match extends React.Component {
     }
 
     const { setErrorFlash } = this.props;
-
     const payload = { type: "REJECT_FIRST_CARD" };
 
     this.channel
@@ -187,7 +189,6 @@ class Match extends React.Component {
     }
 
     const { selectedCards, setErrorFlash } = this.props;
-
     const payload = { type: "DISCARD", cards: selectedCards };
 
     this.channel
@@ -202,7 +203,6 @@ class Match extends React.Component {
     }
 
     const { setErrorFlash } = this.props;
-
     const payload = { type: "TAKE_DISCARD_PILE" };
 
     this.channel
@@ -217,7 +217,6 @@ class Match extends React.Component {
     }
 
     const { setErrorFlash } = this.props;
-
     const payload = { type: "ASK_BEAT" };
 
     this.channel
@@ -232,7 +231,6 @@ class Match extends React.Component {
     }
 
     const { setErrorFlash } = this.props;
-
     const payload = { type: "FALSE_BEAT" };
 
     this.channel
@@ -247,7 +245,6 @@ class Match extends React.Component {
     }
 
     const { setErrorFlash } = this.props;
-
     const payload = { type: "BEAT" };
 
     this.channel
@@ -261,12 +258,8 @@ class Match extends React.Component {
       return;
     }
 
-    const { selectedCards, takedCard, setErrorFlash } = this.props;
-
-    const payload = {
-      type: "DROP_COLLECTION",
-      cards: selectedCards.concat(takedCard),
-    };
+    const { selectedCards, setErrorFlash } = this.props;
+    const payload = { type: "DROP_COLLECTION", cards: selectedCards };
 
     this.channel
       .push("match_event", payload)
@@ -288,6 +281,8 @@ class Match extends React.Component {
       askedBeat,
       falseBeat,
       takedCard,
+      boughtFirstCard,
+      takedDiscardPile,
     } = this.props;
 
     const myTime = matchPlayerId === roundMatchPlayerId;
@@ -301,14 +296,11 @@ class Match extends React.Component {
 
         <Stock
           myTime={myTime}
+          preJoker={preJoker}
           headStockDeck={headStockDeck}
           headDiscardPile={headDiscardPile}
-          preJoker={preJoker}
-          firstCard={takedCard}
-          onAcceptFirstCard={this.onAcceptFirstCard}
-          onRejectFirstCard={this.onRejectFirstCard}
-          onBuy={this.onBuy}
           onTakeDiscardPile={this.onTakeDiscardPile}
+          onBuy={this.onBuy}
         />
 
         <Collections matchCollections={matchCollections} myTime={myTime} />
@@ -316,7 +308,7 @@ class Match extends React.Component {
         <Actions
           discard={myTime && selectedCards.length === 1 && !takedCard}
           onDiscard={this.onDiscard}
-          dropCollection={myTime && selectedCards.concat(takedCard).length > 2}
+          dropCollection={myTime && selectedCards.length > 2}
           onDropCollection={this.onDropCollection}
           beat={myTime && matchPlayerHand.length === 0}
           onBeat={this.onBeat}
@@ -327,9 +319,13 @@ class Match extends React.Component {
         />
 
         <Hand
+          myTime={myTime}
           cards={matchPlayerHand}
           selectedCards={selectedCards}
-          myTime={myTime}
+          takedDiscardPileCard={takedDiscardPile && takedCard}
+          firstCard={boughtFirstCard && takedCard}
+          onAcceptFirstCard={this.onAcceptFirstCard}
+          onRejectFirstCard={this.onRejectFirstCard}
         />
       </Table>
     );
@@ -350,6 +346,8 @@ const mapStateToProps = (state) => {
     askedBeat: state.matchPlayer.askedBeat,
     falseBeat: state.matchPlayer.falseBeat,
     takedCard: state.matchPlayer.takedCard,
+    boughtFirstCard: state.matchPlayer.boughtFirstCard,
+    takedDiscardPile: state.matchPlayer.takedDiscardPile,
     selectedCards: state.matchPlayer.selectedCards,
   };
 };

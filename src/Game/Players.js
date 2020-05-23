@@ -51,6 +51,8 @@ const Players = ({
         asked_beat: askedBeat,
         false_beat: falseBeat,
         taked_card: takedCard,
+        bought_first_card: boughtFirstCard,
+        taked_discard_pile: takedDiscardPile,
       } = matchPlayer;
 
       setMatch(
@@ -68,7 +70,9 @@ const Players = ({
         matchPlayerHand,
         askedBeat,
         falseBeat,
-        takedCard
+        takedCard,
+        boughtFirstCard,
+        takedDiscardPile
       );
 
       redirectTo(["", gameId, playerId, matchId, matchPlayerId].join("/"));

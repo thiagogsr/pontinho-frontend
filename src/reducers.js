@@ -70,6 +70,8 @@ const matchPlayerInitialState = {
   askedBeat: false,
   falseBeat: false,
   takedCard: null,
+  boughtFirstCard: false,
+  takedDiscardPile: false,
 };
 
 const matchPlayer = (state = matchPlayerInitialState, action) => {
@@ -82,6 +84,8 @@ const matchPlayer = (state = matchPlayerInitialState, action) => {
         askedBeat: action.askedBeat,
         falseBeat: action.falseBeat,
         takedCard: action.takedCard,
+        boughtFirstCard: action.boughtFirstCard,
+        takedDiscardPile: action.takedDiscardPile,
         selectedCards: [],
       };
     case TOGGLE_CARD:

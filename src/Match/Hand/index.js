@@ -1,11 +1,45 @@
 import React from "react";
 import { connect } from "react-redux";
 import { toggleCard } from "../../actions";
-import { Hand } from "./styled";
+import { Hand, Title, FirstCardActions, FirstCardButton } from "./styled";
 import StyledCard from "../StyledCard";
 
-const MatchPlayerHand = ({ cards, selectedCards, myTime, toggleCard }) => (
+const MatchPlayerHand = ({
+  cards,
+  selectedCards,
+  myTime,
+  toggleCard,
+  firstCard,
+  onAcceptFirstCard,
+  onRejectFirstCard,
+  takedDiscardPileCard,
+}) => (
   <Hand>
+    {firstCard && (
+      <div>
+        <FirstCardActions>
+          <FirstCardButton onClick={onAcceptFirstCard}>Aceitar</FirstCardButton>
+          <FirstCardButton onClick={onRejectFirstCard}>
+            Rejeitar
+          </FirstCardButton>
+        </FirstCardActions>
+        <StyledCard value={firstCard.value} suit={firstCard.suit} />
+      </div>
+    )}
+
+    {takedDiscardPileCard && (
+      <div>
+        <Title>Carta cavada</Title>
+        <StyledCard
+          value={takedDiscardPileCard.value}
+          suit={takedDiscardPileCard.suit}
+          selectable={true}
+          selected={selectedCards.includes(takedDiscardPileCard)}
+          onClick={() => toggleCard(takedDiscardPileCard)}
+        />
+      </div>
+    )}
+
     {cards.map((card, index) => (
       <StyledCard
         key={index}
