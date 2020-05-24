@@ -67,6 +67,7 @@ class Match extends React.Component {
       const {
         match_id: matchId,
         pre_joker: preJoker,
+        joker,
         head_stock_deck: headStockDeck,
         head_discard_pile: headDiscardPile,
         match_collections: matchCollections,
@@ -87,6 +88,7 @@ class Match extends React.Component {
       setMatch(
         matchId,
         preJoker,
+        joker,
         headStockDeck,
         headDiscardPile,
         matchCollections,
@@ -312,6 +314,25 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
+  onJokerReplace = (matchCollection) => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const { selectedCards, setErrorFlash } = this.props;
+
+    const payload = {
+      type: "REPLACE_JOKER",
+      cards: selectedCards,
+      match_collection_id: matchCollection.id,
+    };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
   render() {
     const {
       matchPlayers,
@@ -319,6 +340,7 @@ class Match extends React.Component {
       headStockDeck,
       headDiscardPile,
       preJoker,
+      joker,
       matchCollections,
       matchPlayerId,
       matchPlayerHand,
@@ -350,8 +372,11 @@ class Match extends React.Component {
 
         <Collections
           matchCollections={matchCollections}
-          selectable={myTime && selectedCards.length > 0 && !takedCard}
-          onSelect={this.onAddCardToCollection}
+          joker={joker}
+          addable={myTime && selectedCards.length > 0 && !takedCard}
+          jokerReplaceable={myTime && selectedCards.length === 1 && !takedCard}
+          onAdd={this.onAddCardToCollection}
+          onJokerReplace={this.onJokerReplace}
         />
 
         <Actions
@@ -388,6 +413,7 @@ const mapStateToProps = (state) => {
     headStockDeck: state.match.headStockDeck,
     headDiscardPile: state.match.headDiscardPile,
     preJoker: state.match.preJoker,
+    joker: state.match.joker,
     matchCollections: state.match.matchCollections,
     roundMatchPlayerId: state.match.roundMatchPlayerId,
     matchPlayerId: state.matchPlayer.matchPlayerId,

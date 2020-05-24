@@ -38,6 +38,7 @@ const game = (state = gameInitialState, action) => {
 const matchInitialState = {
   matchId: "",
   preJoker: null,
+  joker: null,
   headStockDeck: null,
   headDiscardPile: null,
   matchCollections: [],
@@ -52,6 +53,7 @@ const match = (state = matchInitialState, action) => {
         ...state,
         matchId: action.matchId,
         preJoker: action.preJoker,
+        joker: action.joker,
         headStockDeck: action.headStockDeck,
         headDiscardPile: action.headDiscardPile,
         matchCollections: action.matchCollections,

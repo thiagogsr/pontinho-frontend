@@ -38,6 +38,7 @@ const Players = ({
       const {
         match_id: matchId,
         pre_joker: preJoker,
+        joker,
         head_stock_deck: headStockDeck,
         head_discard_pile: headDiscardPile,
         match_collections: matchCollections,
@@ -58,6 +59,7 @@ const Players = ({
       setMatch(
         matchId,
         preJoker,
+        joker,
         headStockDeck,
         headDiscardPile,
         matchCollections,

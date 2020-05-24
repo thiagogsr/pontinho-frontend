@@ -41,6 +41,7 @@ export function startMatch(gameId) {
 export function setMatch(
   matchId,
   preJoker,
+  joker,
   headStockDeck,
   headDiscardPile,
   matchCollections,
@@ -51,6 +52,7 @@ export function setMatch(
     type: SET_MATCH,
     matchId,
     preJoker,
+    joker,
     headStockDeck,
     headDiscardPile,
     matchCollections,
@@ -88,6 +90,7 @@ export function fetchMatch(matchId, matchPlayerId) {
       const {
         match_id: matchId,
         pre_joker: preJoker,
+        joker,
         head_stock_deck: headStockDeck,
         head_discard_pile: headDiscardPile,
         match_collections: matchCollections,
@@ -109,6 +112,7 @@ export function fetchMatch(matchId, matchPlayerId) {
         setMatch(
           matchId,
           preJoker,
+          joker,
           headStockDeck,
           headDiscardPile,
           matchCollections,
