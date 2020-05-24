@@ -17,16 +17,19 @@ export const Joker = styled(Card)`
 `;
 
 export const Stock = styled(Back)`
-  cursor: ${(props) => (props.selectable ? "pointer" : "unset")};
-  border: 2px solid transparent;
-  border-radius: 7px;
   position: relative;
   left: -25px;
   z-index: 2;
 
-  &:hover,
-  &:focus,
-  &.active {
-    border-color: ${(props) => (props.selectable ? "white" : "transparent")};
+  svg {
+    cursor: ${(props) => (props.selectable ? "pointer" : "unset")};
+    border: 2px solid transparent;
+    border-radius: 7px;
+
+    &:hover,
+    &:focus,
+    &.active {
+      border-color: ${(props) => (props.selectable ? "white" : "transparent")};
+    }
   }
 `;

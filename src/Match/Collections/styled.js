@@ -12,6 +12,8 @@ export const Container = styled.div`
 
 export const Sequence = styled.div`
   margin: 0 20px 20px 0;
+  display: flex;
+  flex-direction: row;
 
   ${StyledCard} {
     margin-left: -58px;

@@ -76,8 +76,8 @@ export default ({ value, suit, width = WIDTH, className, onClick }) => {
   const Component = cards[value][suit];
 
   return (
-    <div onClick={onClick}>
-      <Component width={width} className={className} />
+    <div onClick={onClick} className={className}>
+      <Component width={width} />
     </div>
   );
 };
@@ -86,16 +86,16 @@ export const Back = ({ deck, className, onClick }) => {
   switch (deck) {
     case 1:
       return (
-        <div onClick={onClick}>
-          <BackDeck1 width={WIDTH} className={className} />
+        <div onClick={onClick} className={className}>
+          <BackDeck1 width={WIDTH} />
         </div>
       );
 
     case 2:
     default:
       return (
-        <div onClick={onClick}>
-          <BackDeck2 width={WIDTH} className={className} />
+        <div onClick={onClick} className={className}>
+          <BackDeck2 width={WIDTH} />
         </div>
       );
   }
