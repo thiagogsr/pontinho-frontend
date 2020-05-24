@@ -7,7 +7,7 @@ import StyledCard from "../StyledCard";
 const MatchPlayerHand = ({
   cards,
   selectedCards,
-  myTime,
+  selectable,
   toggleCard,
   firstCard,
   onAcceptFirstCard,
@@ -45,9 +45,9 @@ const MatchPlayerHand = ({
         key={index}
         value={card.value}
         suit={card.suit}
-        selectable={myTime}
+        selectable={selectable}
         selected={selectedCards.includes(card)}
-        onClick={() => myTime && toggleCard(card)}
+        onClick={() => selectable && toggleCard(card)}
       />
     ))}
   </Hand>

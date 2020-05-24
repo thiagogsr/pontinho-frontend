@@ -7,7 +7,8 @@ import Hand from "./Hand";
 import MatchPlayers from "./MatchPlayers";
 import Stock from "./Stock";
 import Actions from "./Actions";
-import { setErrorFlash } from "../Flash";
+import { setErrorFlash, setSuccessFlash } from "../Flash";
+import { redirectTo } from "../navigation";
 import { fetchMatch, setMatch, setMatchPlayer } from "../actions";
 import { Table } from "./styled";
 
@@ -48,8 +49,10 @@ class Match extends React.Component {
       matchId,
       setMatch,
       setMatchPlayer,
+      redirectTo,
+      setSuccessFlash,
       match: {
-        params: { playerId },
+        params: { gameId, playerId },
       },
     } = this.props;
 
@@ -102,7 +105,17 @@ class Match extends React.Component {
       );
     });
 
-    this.channel.on("beat", () => {});
+    this.channel.on("beat", (data) => {
+      const { player_name: playerName } = data;
+
+      setSuccessFlash(
+        `${playerName} bateu! Você será redirecionado em 5 segundos...`
+      );
+
+      window.setTimeout(() => {
+        redirectTo(["", gameId, playerId].join("/"));
+      }, 5000);
+    });
 
     this.channel.join();
   }
@@ -267,6 +280,38 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
+  onAddCardToCollection = (matchCollection, direction) => {
+    if (!this.connectedChannel()) {
+      return;
+    }
+
+    const { selectedCards, setErrorFlash } = this.props;
+
+    let cards;
+
+    switch (direction) {
+      case "BEGIN":
+        cards = selectedCards.concat(matchCollection.cards.flat());
+        break;
+      case "END":
+        cards = matchCollection.cards.flat().concat(selectedCards);
+        break;
+      default:
+        break;
+    }
+
+    const payload = {
+      type: "ADD_CARD_TO_COLLECTION",
+      match_collection_id: matchCollection.id,
+      cards,
+    };
+
+    this.channel
+      .push("match_event", payload)
+      .receive("error", ({ errors }) => setErrorFlash(errors))
+      .receive("timeout", this.timeoutChannel);
+  };
+
   render() {
     const {
       matchPlayers,
@@ -295,7 +340,7 @@ class Match extends React.Component {
         />
 
         <Stock
-          myTime={myTime}
+          selectable={myTime}
           preJoker={preJoker}
           headStockDeck={headStockDeck}
           headDiscardPile={headDiscardPile}
@@ -303,7 +348,11 @@ class Match extends React.Component {
           onBuy={this.onBuy}
         />
 
-        <Collections matchCollections={matchCollections} myTime={myTime} />
+        <Collections
+          matchCollections={matchCollections}
+          selectable={myTime && selectedCards.length > 0 && !takedCard}
+          onSelect={this.onAddCardToCollection}
+        />
 
         <Actions
           discard={myTime && selectedCards.length === 1 && !takedCard}
@@ -319,7 +368,7 @@ class Match extends React.Component {
         />
 
         <Hand
-          myTime={myTime}
+          selectable={myTime}
           cards={matchPlayerHand}
           selectedCards={selectedCards}
           takedDiscardPileCard={takedDiscardPile && takedCard}
@@ -354,9 +403,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchMatch,
+  setSuccessFlash,
   setErrorFlash,
   setMatch,
   setMatchPlayer,
+  redirectTo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Match));

@@ -4,9 +4,8 @@ import Card, { Back } from "../../Card";
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-self: center;
-  width: 390px;
 `;
 
 export const Joker = styled(Card)`

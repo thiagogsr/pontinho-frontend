@@ -6,7 +6,7 @@ export default ({
   headStockDeck,
   preJoker,
   headDiscardPile,
-  myTime,
+  selectable,
   onBuy,
   onTakeDiscardPile,
 }) => (
@@ -16,8 +16,8 @@ export default ({
     {headStockDeck && (
       <Stock
         deck={headStockDeck}
-        selectable={myTime}
-        onClick={() => myTime && onBuy()}
+        selectable={selectable}
+        onClick={() => selectable && onBuy()}
       />
     )}
 
@@ -25,7 +25,7 @@ export default ({
       <StyledCard
         value={headDiscardPile.value}
         suit={headDiscardPile.suit}
-        selectable={myTime}
+        selectable={selectable}
         onClick={onTakeDiscardPile}
       />
     )}

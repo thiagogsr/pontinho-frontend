@@ -10,8 +10,31 @@ export const Container = styled.div`
   flex-wrap: wrap;
 `;
 
+export const Collection = styled.div`
+  margin: 0 50px 20px 0;
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Plus = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  color: #106544;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 49px;
+
+  &:before {
+    content: "+";
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+  }
+`;
+
 export const Sequence = styled.div`
-  margin: 0 20px 20px 0;
   display: flex;
   flex-direction: row;
 
@@ -25,7 +48,6 @@ export const Sequence = styled.div`
 `;
 
 export const Trio = styled.div`
-  margin: 0 20px 20px 0;
   display: flex;
   flex-direction: row;
 `;
