@@ -386,9 +386,12 @@ class Match extends React.Component {
           onDropCollection={this.onDropCollection}
           beat={myTime && matchPlayerHand.length === 0}
           onBeat={this.onBeat}
-          askBeat={!myTime && !falseBeat}
+          askBeat={
+            matchPlayerHand.length > 0 &&
+            ((myTime && !askedBeat) || (!myTime && !askedBeat && !falseBeat))
+          }
           onAskBeat={this.onAskBeat}
-          falseBeat={askedBeat}
+          falseBeat={!myTime && askedBeat}
           onFalseBeat={this.onFalseBeat}
         />
 
