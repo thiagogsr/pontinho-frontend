@@ -9,4 +9,4 @@ COPY src src
 RUN yarn install
 RUN yarn build:production
 
-CMD DEBUG=express:* node server.js
+CMD node server.js
