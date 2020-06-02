@@ -380,7 +380,9 @@ class Match extends React.Component {
         />
 
         <Actions
-          discard={myTime && selectedCards.length === 1 && !takedCard}
+          discard={
+            myTime && selectedCards.length === 1 && !takedCard && !askedBeat
+          }
           onDiscard={this.onDiscard}
           dropCollection={myTime && selectedCards.length > 2}
           onDropCollection={this.onDropCollection}
