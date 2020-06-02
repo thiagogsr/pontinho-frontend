@@ -373,8 +373,8 @@ class Match extends React.Component {
         <Collections
           matchCollections={matchCollections}
           joker={joker}
-          addable={myTime && selectedCards.length > 0 && !takedCard}
-          jokerReplaceable={myTime && selectedCards.length === 1 && !takedCard}
+          addable={myTime && selectedCards.length > 0}
+          jokerReplaceable={myTime && selectedCards.length === 1}
           onAdd={this.onAddCardToCollection}
           onJokerReplace={this.onJokerReplace}
         />
