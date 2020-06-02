@@ -15,7 +15,7 @@ export default ({ matchPlayers, roundMatchPlayerId }) => (
           {Array(matchPlayer.broke_times)
             .fill()
             .map(() => "X")
-            .join()}
+            .join("")}
         </div>
       </MatchPlayer>
     ))}

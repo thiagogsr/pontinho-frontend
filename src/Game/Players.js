@@ -135,7 +135,7 @@ const Players = ({
                     ? Array(matchPlayer.broke)
                         .fill()
                         .map(() => "X")
-                        .join()
+                        .join("")
                     : matchPlayer.points}
                 </Column>
               ))}
