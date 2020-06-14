@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding: 0 20px;
+  padding: 20px;
   box-sizing: border-box;
   color: white;
 `;
@@ -17,7 +17,7 @@ export const Button = styled.button`
   border-radius: 8px;
   cursor: pointer;
   padding: 10px 20px;
-  margin-top: 20px;
+  margin: 20px 0;
   font-size: 18px;
 
   &:hover,

@@ -7,7 +7,6 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: "Arial Regular", sans-serif;
-    overflow: hidden;
     background-color: #106544;
     margin: 0;
   }
