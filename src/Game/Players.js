@@ -2,7 +2,7 @@ import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import PlayerSocket from "../PlayerSocket";
-import { setPlayers, fetchGame, setMatch, setMatchPlayer } from "../actions";
+import { setPlayers, setMatch, setMatchPlayer } from "../actions";
 import { redirectTo } from "../navigation";
 import { Column, Row, Table } from "./styled";
 
@@ -11,17 +11,15 @@ const Players = ({
   players,
   matches,
   setPlayers,
-  fetchGame,
   setMatch,
   setMatchPlayer,
   redirectTo,
 }) => {
-  const { gameId: gameIdFromUrl, playerId } = useParams();
+  const { playerId } = useParams();
   const numberOfMatches = matches.length;
 
   useEffect(() => {
     if (!gameId) {
-      fetchGame(gameIdFromUrl);
       return;
     }
 
@@ -179,7 +177,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setPlayers,
-  fetchGame,
   setMatch,
   redirectTo,
   setMatchPlayer,
