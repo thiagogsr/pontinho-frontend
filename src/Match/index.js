@@ -390,7 +390,9 @@ class Match extends React.Component {
           onBeat={this.onBeat}
           askBeat={
             matchPlayerHand.length > 0 &&
-            ((myTime && !askedBeat) || (!myTime && !askedBeat && !falseBeat))
+            !askedBeat &&
+            !takedCard &&
+            (myTime || (!myTime && !falseBeat))
           }
           onAskBeat={this.onAskBeat}
           falseBeat={!myTime && askedBeat}
