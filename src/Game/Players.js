@@ -138,7 +138,7 @@ const Players = ({
                 </Column>
               ))}
 
-              <Column>{match.croupier.name}</Column>
+              <Column>{match.croupier}</Column>
             </Row>
           </Fragment>
         ))}
