@@ -16,6 +16,7 @@ const Players = ({
   redirectTo,
 }) => {
   const { playerId } = useParams();
+  const host = players.find((player) => player.host);
   const numberOfMatches = matches.length;
 
   useEffect(() => {
@@ -87,7 +88,7 @@ const Players = ({
         <Row>
           {players.map((player) => (
             <Column header key={player.id} lineThrough={!player.playing}>
-              {player.name}
+              {player.name} {player.id == host.id ? "👑" : ""}
             </Column>
           ))}
 

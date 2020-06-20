@@ -6,9 +6,9 @@ import { Button } from "./styled";
 
 const StartMatch = ({ players, startMatch }) => {
   const { gameId, playerId } = useParams();
-  const me = players.find((player) => player.id === playerId);
+  const host = players.find((player) => player.id === playerId && player.host);
 
-  if (me && me.host) {
+  if (host) {
     return <Button onClick={() => startMatch(gameId)}>Iniciar partida</Button>;
   } else {
     return null;
