@@ -88,7 +88,7 @@ const Players = ({
         <Row>
           {players.map((player) => (
             <Column header key={player.id} lineThrough={!player.playing}>
-              {player.name} {player.id == host.id ? "👑" : ""}
+              {player.name} {host && player.id === host.id ? "👑" : ""}
             </Column>
           ))}
 
