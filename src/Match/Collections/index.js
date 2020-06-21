@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   Container,
   Collection,
@@ -27,46 +28,77 @@ const TwoCards = ({ cards }) => (
   </TrioTwin>
 );
 
-export default ({
+const Collections = ({
   matchCollections,
   joker,
-  addable,
-  jokerReplaceable,
+  selectedCards,
+  matchPlayerId,
+  roundMatchPlayerId,
   onAdd,
   onJokerReplace,
-}) => (
-  <Container>
-    {matchCollections.map((matchCollection) => {
-      const Component = matchCollection.type === "sequence" ? Sequence : Trio;
+}) => {
+  const addable =
+    matchPlayerId === roundMatchPlayerId && selectedCards.length > 0;
 
-      return (
-        <Collection key={matchCollection.id}>
-          {addable && <Plus onClick={() => onAdd(matchCollection, "BEGIN")} />}
+  const jokerReplaceable =
+    matchPlayerId === roundMatchPlayerId && selectedCards.length === 1;
 
-          <Component>
-            {matchCollection.cards.map((card, index) => {
-              if (Array.isArray(card)) {
-                return <TwoCards key={index} cards={card} />;
-              } else {
-                return (
-                  <OneCard
-                    key={index}
-                    card={card}
-                    replaceable={
-                      jokerReplaceable &&
-                      joker.value === card.value &&
-                      joker.suit === card.suit
-                    }
-                    onJokerReplace={() => onJokerReplace(matchCollection)}
-                  />
-                );
-              }
-            })}
-          </Component>
+  return (
+    <Container>
+      {matchCollections.map((matchCollection) => {
+        const Component = matchCollection.type === "sequence" ? Sequence : Trio;
 
-          {addable && <Plus onClick={() => onAdd(matchCollection, "END")} />}
-        </Collection>
-      );
-    })}
-  </Container>
-);
+        return (
+          <Collection key={matchCollection.id}>
+            {addable && (
+              <Plus
+                onClick={() => onAdd(matchCollection, "BEGIN", selectedCards)}
+              />
+            )}
+
+            <Component>
+              {matchCollection.cards.map((card, index) => {
+                if (Array.isArray(card)) {
+                  return <TwoCards key={index} cards={card} />;
+                } else {
+                  return (
+                    <OneCard
+                      key={index}
+                      card={card}
+                      replaceable={
+                        jokerReplaceable &&
+                        joker.value === card.value &&
+                        joker.suit === card.suit
+                      }
+                      onJokerReplace={() =>
+                        onJokerReplace(matchCollection, selectedCards)
+                      }
+                    />
+                  );
+                }
+              })}
+            </Component>
+
+            {addable && (
+              <Plus
+                onClick={() => onAdd(matchCollection, "END", selectedCards)}
+              />
+            )}
+          </Collection>
+        );
+      })}
+    </Container>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    roundMatchPlayerId: state.match.roundMatchPlayerId,
+    matchPlayerId: state.matchPlayer.matchPlayerId,
+    matchCollections: state.match.matchCollections,
+    joker: state.match.joker,
+    selectedCards: state.matchPlayer.selectedCards,
+  };
+};
+
+export default connect(mapStateToProps)(Collections);

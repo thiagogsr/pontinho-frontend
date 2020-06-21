@@ -15,7 +15,7 @@ export const Joker = styled(Card)`
   z-index: 1;
 `;
 
-export const Stock = styled(Back)`
+export const StockDeck = styled(Back)`
   position: relative;
   left: -25px;
   z-index: 2;

@@ -1,33 +1,52 @@
 import React from "react";
-import { Container, Joker, Stock } from "./styled";
+import { connect } from "react-redux";
+import { Container, Joker, StockDeck } from "./styled";
 import StyledCard from "../StyledCard";
 
-export default ({
+const Stock = ({
+  roundMatchPlayerId,
+  matchPlayerId,
   headStockDeck,
   preJoker,
   headDiscardPile,
-  selectable,
   onBuy,
   onTakeDiscardPile,
-}) => (
-  <Container>
-    {preJoker && <Joker value={preJoker.value} suit={preJoker.suit} />}
+}) => {
+  const selectable = matchPlayerId === roundMatchPlayerId;
+  const buyFirstCard = !headDiscardPile;
 
-    {headStockDeck && (
-      <Stock
-        deck={headStockDeck}
-        selectable={selectable}
-        onClick={() => selectable && onBuy()}
-      />
-    )}
+  return (
+    <Container>
+      {preJoker && <Joker value={preJoker.value} suit={preJoker.suit} />}
 
-    {headDiscardPile && (
-      <StyledCard
-        value={headDiscardPile.value}
-        suit={headDiscardPile.suit}
-        selectable={selectable}
-        onClick={onTakeDiscardPile}
-      />
-    )}
-  </Container>
-);
+      {headStockDeck && (
+        <StockDeck
+          deck={headStockDeck}
+          selectable={selectable}
+          onClick={() => selectable && onBuy(buyFirstCard)}
+        />
+      )}
+
+      {headDiscardPile && (
+        <StyledCard
+          value={headDiscardPile.value}
+          suit={headDiscardPile.suit}
+          selectable={selectable}
+          onClick={onTakeDiscardPile}
+        />
+      )}
+    </Container>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    roundMatchPlayerId: state.match.roundMatchPlayerId,
+    matchPlayerId: state.matchPlayer.matchPlayerId,
+    preJoker: state.match.preJoker,
+    headStockDeck: state.match.headStockDeck,
+    headDiscardPile: state.match.headDiscardPile,
+  };
+};
+
+export default connect(mapStateToProps)(Stock);

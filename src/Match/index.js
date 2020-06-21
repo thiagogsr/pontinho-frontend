@@ -146,22 +146,22 @@ class Match extends React.Component {
     ]);
   };
 
-  onBuy = () => {
+  onBuy = (firstCard) => {
     if (!this.connectedChannel()) {
       return;
     }
 
-    const { headDiscardPile, setErrorFlash } = this.props;
+    const { setErrorFlash } = this.props;
 
-    if (headDiscardPile) {
-      const payload = { type: "BUY" };
+    if (firstCard) {
+      const payload = { type: "BUY_FIRST_CARD" };
 
       this.channel
         .push("match_event", payload)
         .receive("error", ({ errors }) => setErrorFlash(errors))
         .receive("timeout", this.timeoutChannel);
     } else {
-      const payload = { type: "BUY_FIRST_CARD" };
+      const payload = { type: "BUY" };
 
       this.channel
         .push("match_event", payload)
@@ -198,13 +198,13 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
-  onDiscard = () => {
+  onDiscard = (cards) => {
     if (!this.connectedChannel()) {
       return;
     }
 
-    const { selectedCards, setErrorFlash } = this.props;
-    const payload = { type: "DISCARD", cards: selectedCards };
+    const { setErrorFlash } = this.props;
+    const payload = { type: "DISCARD", cards };
 
     this.channel
       .push("match_event", payload)
@@ -268,13 +268,13 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
-  onDropCollection = () => {
+  onDropCollection = (cards) => {
     if (!this.connectedChannel()) {
       return;
     }
 
-    const { selectedCards, setErrorFlash } = this.props;
-    const payload = { type: "DROP_COLLECTION", cards: selectedCards };
+    const { setErrorFlash } = this.props;
+    const payload = { type: "DROP_COLLECTION", cards };
 
     this.channel
       .push("match_event", payload)
@@ -282,12 +282,12 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
-  onAddCardToCollection = (matchCollection, direction) => {
+  onAddCardToCollection = (matchCollection, direction, selectedCards) => {
     if (!this.connectedChannel()) {
       return;
     }
 
-    const { selectedCards, setErrorFlash } = this.props;
+    const { setErrorFlash } = this.props;
 
     let cards;
 
@@ -314,17 +314,17 @@ class Match extends React.Component {
       .receive("timeout", this.timeoutChannel);
   };
 
-  onJokerReplace = (matchCollection) => {
+  onJokerReplace = (matchCollection, cards) => {
     if (!this.connectedChannel()) {
       return;
     }
 
-    const { selectedCards, setErrorFlash } = this.props;
+    const { setErrorFlash } = this.props;
 
     const payload = {
       type: "REPLACE_JOKER",
-      cards: selectedCards,
       match_collection_id: matchCollection.id,
+      cards,
     };
 
     this.channel
@@ -334,77 +334,26 @@ class Match extends React.Component {
   };
 
   render() {
-    const {
-      matchPlayers,
-      roundMatchPlayerId,
-      headStockDeck,
-      headDiscardPile,
-      preJoker,
-      joker,
-      matchCollections,
-      matchPlayerId,
-      matchPlayerHand,
-      selectedCards,
-      askedBeat,
-      falseBeat,
-      takedCard,
-      boughtFirstCard,
-      takedDiscardPile,
-    } = this.props;
-
-    const myTime = matchPlayerId === roundMatchPlayerId;
-
     return (
       <Table>
-        <MatchPlayers
-          matchPlayers={matchPlayers}
-          roundMatchPlayerId={roundMatchPlayerId}
-        />
+        <MatchPlayers />
 
-        <Stock
-          selectable={myTime}
-          preJoker={preJoker}
-          headStockDeck={headStockDeck}
-          headDiscardPile={headDiscardPile}
-          onTakeDiscardPile={this.onTakeDiscardPile}
-          onBuy={this.onBuy}
-        />
+        <Stock onTakeDiscardPile={this.onTakeDiscardPile} onBuy={this.onBuy} />
 
         <Collections
-          matchCollections={matchCollections}
-          joker={joker}
-          addable={myTime && selectedCards.length > 0}
-          jokerReplaceable={myTime && selectedCards.length === 1}
           onAdd={this.onAddCardToCollection}
           onJokerReplace={this.onJokerReplace}
         />
 
         <Actions
-          discard={
-            myTime && selectedCards.length === 1 && !takedCard && !askedBeat
-          }
           onDiscard={this.onDiscard}
-          dropCollection={myTime && selectedCards.length > 2}
           onDropCollection={this.onDropCollection}
-          beat={myTime && matchPlayerHand.length === 0}
           onBeat={this.onBeat}
-          askBeat={
-            matchPlayerHand.length > 0 &&
-            !askedBeat &&
-            !takedCard &&
-            (myTime || (!myTime && !falseBeat))
-          }
           onAskBeat={this.onAskBeat}
-          falseBeat={!myTime && askedBeat}
           onFalseBeat={this.onFalseBeat}
         />
 
         <Hand
-          selectable={myTime}
-          cards={matchPlayerHand}
-          selectedCards={selectedCards}
-          takedDiscardPileCard={takedDiscardPile && takedCard}
-          firstCard={boughtFirstCard && takedCard}
           onAcceptFirstCard={this.onAcceptFirstCard}
           onRejectFirstCard={this.onRejectFirstCard}
         />
@@ -416,21 +365,6 @@ class Match extends React.Component {
 const mapStateToProps = (state) => {
   return {
     matchId: state.match.matchId,
-    matchPlayers: state.match.matchPlayers,
-    headStockDeck: state.match.headStockDeck,
-    headDiscardPile: state.match.headDiscardPile,
-    preJoker: state.match.preJoker,
-    joker: state.match.joker,
-    matchCollections: state.match.matchCollections,
-    roundMatchPlayerId: state.match.roundMatchPlayerId,
-    matchPlayerId: state.matchPlayer.matchPlayerId,
-    matchPlayerHand: state.matchPlayer.matchPlayerHand,
-    askedBeat: state.matchPlayer.askedBeat,
-    falseBeat: state.matchPlayer.falseBeat,
-    takedCard: state.matchPlayer.takedCard,
-    boughtFirstCard: state.matchPlayer.boughtFirstCard,
-    takedDiscardPile: state.matchPlayer.takedDiscardPile,
-    selectedCards: state.matchPlayer.selectedCards,
   };
 };
 
