@@ -17,7 +17,7 @@ const MatchPlayers = ({ matchPlayers, roundMatchPlayerId }) => {
         return (
           <MatchPlayer key={matchPlayer.match_player_id} current={current}>
             <div>{matchPlayer.player_name}</div>
-            <div>{matchPlayer.game_points}</div>
+            <div>{matchPlayer.game_points} pontos</div>
             <div>{matchPlayer.number_of_cards} cartas</div>
             <div>
               {Array(matchPlayer.broke_times)
